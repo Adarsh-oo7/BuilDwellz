@@ -21,7 +21,7 @@ export default function BlogPage() {
       date: "May 10, 2025",
       author: "John Doe",
       category: "Design Trends",
-      image: "/sample1.jpg",
+      image: "./sample1.jpg",
     },
     {
       id: 2,
@@ -33,7 +33,7 @@ export default function BlogPage() {
       date: "April 28, 2025",
       author: "Jane Smith",
       category: "Vaasthu",
-      image: "/blog-2.jpg",
+      image: "./blog-2.jpg",
     },
     {
       id: 3,
@@ -45,7 +45,7 @@ export default function BlogPage() {
       date: "April 15, 2025",
       author: "Michael Johnson",
       category: "Sustainability",
-      image: "/blog-3.jpg",
+      image: "./blog-3.jpg",
     },
     {
       id: 4,
@@ -56,7 +56,7 @@ export default function BlogPage() {
       date: "April 5, 2025",
       author: "Sarah Williams",
       category: "Planning",
-      image: "/blog-4.jpg",
+      image: "./blog-4.jpg",
     },
     {
       id: 5,
@@ -67,7 +67,7 @@ export default function BlogPage() {
       date: "March 22, 2025",
       author: "David Brown",
       category: "Interior Design",
-      image: "/blog-5.jpg",
+      image: "./blog-5.jpg",
     },
     {
       id: 6,
@@ -78,7 +78,7 @@ export default function BlogPage() {
       date: "March 10, 2025",
       author: "Emily Davis",
       category: "Construction",
-      image: "/blog-6.jpg",
+      image: "./blog-6.jpg",
     },
   ]
 

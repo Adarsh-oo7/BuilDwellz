@@ -42,7 +42,7 @@ export default function AboutPage() {
             <div className="relative">
               <div className="absolute -top-4 -left-4 w-24 h-24 bg-secondary rounded-tl-lg z-0"></div>
               <Image
-                src="/project-3.jpg"
+                src="./project-3.jpg"
                 alt="BuilDwellz team"
                 width={600}
                 height={400}
@@ -124,19 +124,19 @@ export default function AboutPage() {
                 name: "John Doe",
                 position: "Principal Architect",
                 bio: "With over 15 years of experience in architectural design, John leads our design team with creativity and precision.",
-                image: "/team-1.jpg",
+                image: "./team-1.jpg",
               },
               {
                 name: "Jane Smith",
                 position: "Interior Designer",
                 bio: "Jane specializes in creating beautiful, functional interiors that reflect the unique personality and lifestyle of our clients.",
-                image: "/team-2.jpg",
+                image: "./team-2.jpg",
               },
               {
                 name: "Michael Johnson",
                 position: "Construction Manager",
                 bio: "Michael oversees all construction projects, ensuring quality workmanship and adherence to timelines and budgets.",
-                image: "/team-3.jpg",
+                image: "./team-3.jpg",
               },
             ].map((member, index) => (
               <div key={index} className="bg-background rounded-lg overflow-hidden shadow-md">

@@ -90,7 +90,7 @@ export default function Navbar() {
             className="flex-shrink-0"
           >
             <Link href="/" className="flex items-center">
-              <Image src="/logo.png" alt="BuilDwellz Logo" width={180} height={60} className="h-12 w-auto" />
+              <Image src="./logo.png" alt="BuilDwellz Logo" width={180} height={60} className="h-12 w-auto" />
             </Link>
           </motion.div>
 

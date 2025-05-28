@@ -35,7 +35,7 @@ export default function ProjectsPage() {
       location: "Varkala",
       year: "2024",
       description: "A contemporary villa with open spaces and natural light.",
-      image: "/project-1.jpg",
+      image: "./project-1.jpg",
     },
     {
       id: 2,
@@ -44,7 +44,7 @@ export default function ProjectsPage() {
       location: "Narikkal",
       year: "2023",
       description: "High-end apartment with premium finishes and smart home features.",
-      image: "/project-2.jpg",
+      image: "./project-2.jpg",
     },
     {
       id: 3,
@@ -53,7 +53,7 @@ export default function ProjectsPage() {
       location: "Varkala",
       year: "2023",
       description: "A blend of traditional architecture with modern amenities.",
-      image: "/project-3.jpg",
+      image: "./project-3.jpg",
     },
     {
       id: 4,
@@ -62,7 +62,7 @@ export default function ProjectsPage() {
       location: "Varkala Beach",
       year: "2024",
       description: "A boutique hotel with stunning ocean views and unique design elements.",
-      image: "/project-4.jpg",
+      image: "./project-4.jpg",
     },
     {
       id: 5,
@@ -71,7 +71,7 @@ export default function ProjectsPage() {
       location: "Narikkal",
       year: "2023",
       description: "Modern office space designed for productivity and collaboration.",
-      image: "/project-5.jpg",
+      image: "./project-5.jpg",
     },
     {
       id: 6,
@@ -80,7 +80,7 @@ export default function ProjectsPage() {
       location: "Varkala",
       year: "2022",
       description: "Contemporary restaurant with a warm, inviting atmosphere.",
-      image: "/project-6.jpg",
+      image: "./project-6.jpg",
     },
     {
       id: 7,
@@ -89,7 +89,7 @@ export default function ProjectsPage() {
       location: "Varkala Beach",
       year: "2022",
       description: "Stunning beach house with panoramic ocean views.",
-      image: "/project-7.jpg",
+      image: "./project-7.jpg",
     },
     {
       id: 8,
@@ -98,7 +98,7 @@ export default function ProjectsPage() {
       location: "Narikkal",
       year: "2021",
       description: "Modern retail space designed to enhance customer experience.",
-      image: "/project-8.jpg",
+      image: "./project-8.jpg",
     },
     {
       id: 9,
@@ -107,7 +107,7 @@ export default function ProjectsPage() {
       location: "Varkala",
       year: "2021",
       description: "Sustainable home with energy-efficient features and natural materials.",
-      image: "/project-9.jpg",
+      image: "./project-9.jpg",
     },
   ]
 
