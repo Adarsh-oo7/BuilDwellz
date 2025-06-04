@@ -1,24 +1,13 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { usePathname, useSearchParams } from "next/navigation";
 import { ThemeProvider } from "@/components/theme-provider";
 import { AnimationProvider } from "@/components/animation-provider";
 import { Toaster } from "@/components/ui/toaster";
 import ErrorBoundary from "@/components/error-boundary";
-import Loading from "@/components/Loading"; // Ensure this path is correct
 
 export default function ClientLayout({ children }: { children: React.ReactNode }) {
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    // Simulate loading on page change
-    setIsLoading(true);
-    const timer = setTimeout(() => setIsLoading(false), 500); // Adjust delay as needed
-    return () => clearTimeout(timer);
-  }, [pathname, searchParams]);
+
 
   return (
     <>
@@ -37,7 +26,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
               </div>
             }
           >
-            <Loading isLoading={isLoading} />
+       
             {children}
             <Toaster />
           </ErrorBoundary>
