@@ -6,7 +6,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { AnimationProvider } from "@/components/animation-provider";
 import { Toaster } from "@/components/ui/toaster";
 import ErrorBoundary from "@/components/error-boundary";
-import Loading from "@/components/Loading";
+import Loading from "@/components/Loading"; // Ensure this path is correct
 
 export default function ClientLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
