@@ -52,12 +52,14 @@ export default function Footer() {
             <div className="flex space-x-4">
               <Link
                 href="https://www.facebook.com/share/1C12XqmznD/"
+                target="blank"
                 className="text-gray-300 hover:text-pink-400 transition-colors"
               >
                 <Facebook className="h-6 w-6" />
               </Link>
               <Link
                 href="https://www.instagram.com/buildwellz_designersnbuilders"
+                target="blank"
                 className="text-gray-300 hover:text-pink-400 transition-colors"
               >
                 <Instagram className="h-6 w-6" />
@@ -131,14 +133,9 @@ export default function Footer() {
                   8590128023
                 </a>
               </li>
+              
               <li className="flex items-center group">
-                <Phone className="h-5 w-5 mr-3 text-pink-400 group-hover:text-purple-400 transition-colors" />
-                <a href="tel:7736372784" className="text-gray-300 hover:text-white transition-colors">
-                  7736372784
-                </a>
-              </li>
-              <li className="flex items-center group">
-                <Mail className="h-5 w-5 mr-3 text-pink-400 group-hover:text-purple-400 transition-colors" />
+                <Mail  className="h-5 w-5 mr-3 text-pink-400 group-hover:text-purple-400 transition-colors" />
                 <a
                   href="mailto:BUILDWELLZVARKALA@GMAIL.COM"
                   className="text-gray-300 hover:text-white transition-colors"

@@ -1,19 +1,20 @@
 "use client";
 
 import { useRef, useEffect, useState } from "react";
-import { motion, useScroll, useTransform, useSpring, AnimatePresence } from "framer-motion";
+import { motion, useScroll, useTransform,useAnimation, useSpring, AnimatePresence } from "framer-motion";
 import { Home, Ruler, Compass, FileText, ChevronRight, ArrowRight, Star, Sparkles, Info, PenSquare, Briefcase, Phone, Wrench, Paintbrush, Hammer } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import Head from "next/head";
 
 export default function HomePage() {
+  const controls = useAnimation();
+  const containerRef = useRef(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
 
   const targetRef = useRef(null);
   const cursorRef = useRef(null);
-  const containerRef = useRef(null);
 
   const { scrollYProgress } = useScroll({
     target: targetRef,
@@ -31,8 +32,24 @@ export default function HomePage() {
     return () => clearTimeout(timer);
   }, []);
 
+useEffect(() => {
+  if (!isHovered) {
+    controls.start({
+      x: ["0%", "-50%"],
+      transition: {
+        repeat: Infinity,
+        repeatType: "loop",
+        duration: 10, // Adjust speed here
+        ease: "linear",
+      },
+    });
+  } else {
+    controls.stop(); // Pause on hover
+  }
+}, [isHovered]);
+
   // Custom cursor movement
- 
+
   const services = [
     {
       icon: <Ruler className="h-7 w-7" />,
@@ -100,17 +117,44 @@ export default function HomePage() {
       text: "BuilDwellz transformed our dream home into reality. Their attention to detail and professionalism exceeded our expectations.",
       image: "/testimonial1.jpg",
     },
-    // ... (other testimonials remain unchanged)
+     {
+      name: "Shaiju",
+      location: "Varkala",
+      rating: 5,
+      text: "Choosing BuildWellz was the best decision we made for our home project. Our home turned out better than we imagined.",
+      image: "/testimonial1.jpg",
+    },
+     {
+      name: "Sudheesh",
+      location: "Varkala",
+      rating: 5,
+      text: "From planning to execution, BuildWellz handled everything seamlessly. Their dedication to quality and design made the process stress-free and enjoyable.",
+      image: "/p2.jpg",
+    },
   ];
 
   const projects = [
     {
       title: "Modern Villa",
-      location: "Varkala Beach Road",
-      image: "/project1.jpg",
+      location: "Kollam, Paravur",
+      image: "/p3.jpg",
       type: "Residential",
     },
-    // ... (other projects remain unchanged)
+    {
+      title: "Modern Villa",
+      location: "Panayara, Trivandrum",
+      image: "/p1.jpg",
+      type: "Residential",
+    },
+     {
+      title: "Traditional Home",
+      location: "Varkala, Trivandrum",
+      image: "/p2.jpg",
+      type: "Residential",
+    },
+  
+   
+   
   ];
 
   const navigationLinks = [
@@ -165,7 +209,7 @@ export default function HomePage() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
-  
+
       {/* Loading Screen */}
       <AnimatePresence>
         {!isLoaded && (
@@ -222,7 +266,7 @@ export default function HomePage() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
           >
-          
+
           </motion.div>
 
           <motion.h1
@@ -349,20 +393,20 @@ export default function HomePage() {
                   whileHover={{ y: -10, scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   transition={{ type: "spring", stiffness: 300 }}
-                  className="p-6 rounded-2xl bg-white backdrop-blur-sm shadow-xl hover:shadow-2xl transition-all duration-500 group relative overflow-hidden border border-gray-200"
+                  className="flex flex-col justify-between p-6 rounded-2xl bg-white backdrop-blur-sm shadow-xl hover:shadow-2xl transition-all duration-500 group relative overflow-hidden border border-gray-200 h-full min-h-[320px]"
                 >
                   <div className={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-300`} />
 
-                  <div className="relative z-10">
+                  <div className="relative z-10 flex flex-col flex-grow">
                     <div className={`bg-gradient-to-br ${service.gradient} p-4 rounded-2xl w-16 h-16 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
                       <div className="text-white">{service.icon}</div>
                     </div>
 
                     <h3 className="text-xl font-bold mb-3 text-black">{service.title}</h3>
 
-                    <p className="text-gray-600 mb-6 leading-relaxed">{service.description}</p>
+                    <p className="text-gray-600 mb-6 leading-relaxed flex-grow">{service.description}</p>
 
-                    <Link href="/services" className="flex items-center text-red-600 hover:text-red-700 font-medium transition-colors duration-300">
+                    <Link href="/services" className="flex items-center text-red-600 hover:text-red-700 font-medium transition-colors duration-300 mt-auto">
                       Learn more
                       <ChevronRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
                     </Link>
@@ -371,6 +415,7 @@ export default function HomePage() {
               </ScrollReveal>
             ))}
           </div>
+
         </div>
       </section>
 
@@ -434,16 +479,15 @@ export default function HomePage() {
           </ScrollReveal>
 
           <div className="relative">
-            <div className="absolute left-0 top-0 w-32 h-full bg-gradient-to-r from-black to-transparent z-10 pointer-events-none" />
-            <div className="absolute right-0 top-0 w-32 h-full bg-gradient-to-l from-black to-transparent z-10 pointer-events-none" />
 
             <motion.div
               ref={containerRef}
               className="flex gap-8"
-              animate={{ x: ["0%", "-50%"] }}
+              // animate={{ x: ["0%", "-50%"] }}
               transition={{
-                x: { repeat: Infinity, repeatType: "loop", duration: 30, ease: "linear" },
+                x: { repeat: Infinity, repeatType: "loop", duration: 10, ease: "linear" },
               }}
+              animate={controls}
               onHoverStart={() => setIsHovered(true)}
               onHoverEnd={() => setIsHovered(false)}
             >
@@ -519,7 +563,7 @@ export default function HomePage() {
                     />
                     <motion.div
                       className="absolute inset-0 rounded-3xl border-2 border-red-500/0 group-hover:border-red-500/50"
-                      transition={{ duration: 0.3 }}
+                      transition={{ duration: 0.5 }}
                     />
                   </div>
                 </motion.div>
@@ -556,7 +600,7 @@ export default function HomePage() {
               📍 Narikkal, Varkala
             </p>
             <p className="text-lg text-white mb-2">
-              📞 8137834741 | 8590128023 | 7736372784
+              📞 8137834741 | 8590128023 
             </p>
             <p className="text-lg text-white mb-8">
               📧 <a href="mailto:buildwellzvarkala@gmail.com" className="underline">buildwellzvarkala@gmail.com</a>
