@@ -136,20 +136,20 @@ useEffect(() => {
   const projects = [
     {
       title: "Modern Villa",
-      location: "Kollam, Paravur",
-      image: "/p3.jpg",
+      location: "Panayara, Trivandrum",
+      image: "/assets/Gallery/proj4/p1.jpg",
       type: "Residential",
     },
     {
       title: "Modern Villa",
-      location: "Panayara, Trivandrum",
-      image: "/p1.jpg",
+      location: "Kollam, Paravur",
+      image: "/assets/Gallery/proj1/p3.jpg",
       type: "Residential",
     },
      {
       title: "Traditional Home",
       location: "Varkala, Trivandrum",
-      image: "/p2.jpg",
+      image: "/assets/Gallery/proj3/p2.jpg",
       type: "Residential",
     },
   
