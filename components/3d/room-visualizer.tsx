@@ -1,42 +1,52 @@
+"use client";
+
 import { useState, useEffect, Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, useGLTF } from "@react-three/drei";
 
-
-// Responsive detection
+// ✅ Mobile check hook
 function useMobile() {
   const [isMobile, setIsMobile] = useState(false);
   useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 768);
-    check();
-    window.addEventListener("resize", check);
-    return () => window.removeEventListener("resize", check);
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
   return isMobile;
 }
 
+// ✅ 3D Model Renderer
 function RoomModel({ modelPath, autoRotate, scale }) {
   const { scene } = useGLTF(modelPath);
 
-  useEffect(() => {
-    scene.traverse((child) => {
-      if (child.name === "Wall_01" || child.name.includes("Ceiling")) {
-        child.visible = false;
-      }
-    });
-  }, [scene]);
+  return (
+    <Canvas camera={{ position: [0, 0.3, 0.6], fov: 60 }} style={{ height: 400 }}>
+      {/* Light background */}
+      <color attach="background" args={["#f0f0f0"]} />
 
-return (
-    <Canvas camera={{ position: [0, 1.2, 1.5], fov: 60 }} style={{ height: 400 }}>
-      <ambientLight intensity={0.8} />
-      <directionalLight position={[2, 2, 2]} />
+      {/* Lighting */}
+      <ambientLight intensity={1.2} />
+      <directionalLight position={[2, 2, 2]} intensity={1.5} />
+
+      {/* Model */}
       <primitive object={scene} scale={scale} rotation={[0, Math.PI, 0]} />
-      <OrbitControls enableZoom autoRotate={autoRotate} target={[0, 1, 0]} />
+
+      {/* Orbit Controls */}
+      <OrbitControls
+        enableZoom
+        enablePan={false}
+        autoRotate={autoRotate}
+        autoRotateSpeed={1}
+        minPolarAngle={Math.PI / 6}
+        maxPolarAngle={Math.PI / 2}
+        target={[0, 0, 0]}
+      />
     </Canvas>
   );
 }
 
-// Simple button
+// ✅ Toggle Button
 function Button({ onClick, children }) {
   return (
     <button
@@ -48,44 +58,40 @@ function Button({ onClick, children }) {
   );
 }
 
-// Main Visualizer
+// ✅ Main Visualizer Component
 export default function RoomVisualizer() {
   const [autoRotate, setAutoRotate] = useState(true);
   const isMobile = useMobile();
 
   return (
-    <div className="relative w-full h-[500px] md:h-[700px] bg-gradient-to-br from-gray-900 to-black overflow-hidden">
+    <div className="relative w-full h-[500px] md:h-[700px] bg-white overflow-hidden">
       {/* Title */}
       <div className="absolute top-10 w-full text-center z-10">
-        <h2 className="text-2xl md:text-4xl font-bold text-white mb-2">Room Visualizer</h2>
+        <h2 className="text-2xl md:text-4xl font-bold text-black mb-2">Room Visualizer</h2>
       </div>
 
-      {/* Model Viewer */}
+      {/* 3D Canvas */}
       <div className="absolute inset-0 flex items-center justify-center">
         <div className="w-full max-w-4xl h-[400px]">
-          <Suspense fallback={<div className="text-white text-center">Loading model...</div>}>
+          <Suspense fallback={<div className="text-black text-center">Loading model...</div>}>
             <RoomModel
-              modelPath="/assets/3d/bathroom_interior.glb"
+              modelPath="https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Duck/glTF-Binary/Duck.glb"
               autoRotate={autoRotate}
-              scale={isMobile ? 0.8 : 1}
+              scale={isMobile ? 0.15 : 0.2} // Good scale for Duck model
             />
           </Suspense>
         </div>
       </div>
 
-      {/* Rotation toggle */}
+      {/* Button */}
       <div className="absolute bottom-4 right-4 z-10">
         <Button onClick={() => setAutoRotate(!autoRotate)}>
           {autoRotate ? "Stop Rotation" : "Start Rotation"}
         </Button>
       </div>
-
-      {/* Background Glow */}
-      <div className="absolute top-10 left-10 w-20 h-20 bg-blue-500/20 rounded-full blur-xl animate-pulse"></div>
-      <div className="absolute bottom-20 right-20 w-16 h-16 bg-purple-500/20 rounded-full blur-xl animate-pulse" style={{ animationDelay: '1s' }}></div>
     </div>
   );
 }
 
-// Preload model
-useGLTF.preload("/assets/3d/bathroom_interior.glb");
+// ✅ Preload for performance
+useGLTF.preload("https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Duck/glTF-Binary/Duck.glb");

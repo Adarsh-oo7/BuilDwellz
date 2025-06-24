@@ -13,7 +13,7 @@ function Model(props: any) {
 
   // Use a dummy model if the real one fails to load
   const { scene } = useGLTF(
-    "/assets/3d/duck.glb",
+    "/assets/3d/bathroom_interior.glb",
     undefined,
     (e) => {
       console.error("Error loading 3D model:", e)
