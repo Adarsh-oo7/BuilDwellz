@@ -163,7 +163,7 @@ export default function ProjectsPage() {
                 </div>
               }
             >
-              <RoomVisualizer />
+              {/* <RoomVisualizer /> */}
             </ErrorBoundary>
           </ScrollReveal>
         </div>
