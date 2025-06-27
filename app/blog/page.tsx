@@ -21,7 +21,7 @@ export default function BlogPage() {
       date: "May 10, 2025",
       author: "John Doe",
       category: "Design Trends",
-      image: "./sample1.jpg",
+      image: "/assets/Gallery/proj1/p1.jpg",
     },
     {
       id: 2,
@@ -130,7 +130,7 @@ export default function BlogPage() {
               </div>
               <h2 className="text-3xl md:text-4xl font-bold mb-4">{blogPosts[0].title}</h2>
               <p className="text-lg text-muted-foreground mb-6">{blogPosts[0].excerpt}</p>
-              <p className="text-muted-foreground mb-8">By {blogPosts[0].author}</p>
+              {/* <p className="text-muted-foreground mb-8">By {blogPosts[0].author}</p> */}
               <Button asChild className="bg-primary hover:bg-primary/90 group">
                 <Link href={`/blog/${blogPosts[0].id}`} className="flex items-center">
                   Read Full Article
