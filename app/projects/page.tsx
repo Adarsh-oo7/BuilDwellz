@@ -170,7 +170,7 @@ export default function ProjectsPage() {
       </section>
 
       {/* Projects Gallery */}
-      <ParallaxSection className="py-20">
+      <div className="py-20">
         <div className="container mx-auto px-4">
           <Tabs defaultValue="all" value={activeTab} onValueChange={setActiveTab} className="w-full">
             <div className="flex justify-center mb-12">
@@ -204,7 +204,7 @@ export default function ProjectsPage() {
             </div>
           )}
         </div>
-      </ParallaxSection>
+      </div>
 
       {/* CTA Section */}
       <section className="py-20 bg-gradient-to-r from-primary to-secondary text-white">

@@ -143,7 +143,7 @@ useEffect(() => {
     {
       title: "Modern Villa",
       location: "Kollam, Paravur",
-      image: "/assets/Gallery/proj1/p3.jpg",
+      image: "/assets/Gallery/proj1/p1.jpg",
       type: "Residential",
     },
      {

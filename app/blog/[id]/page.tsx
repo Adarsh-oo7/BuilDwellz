@@ -27,7 +27,7 @@ const blogPosts = [
         date: "April 28, 2025",
         author: "Jane Smith",
         category: "Vaasthu",
-        image: "/blog-2.jpg",
+        image: "/assets/Gallery/blogs/Vastu Chart-Photoroom.png",
     },
     {
       id: 3,
@@ -38,7 +38,7 @@ const blogPosts = [
       date: "April 15, 2025",
       author: "Michael Johnson",
       category: "Sustainability",
-      image: "./blog-3.jpg",
+      image: "/assets/Gallery/blogs/sustainable-home-tech.jpg",
     },
      {
       id: 4,
@@ -48,7 +48,7 @@ const blogPosts = [
       date: "April 5, 2025",
       author: "Sarah Williams",
       category: "Planning",
-      image: "./blog-4.jpg",
+      image: "/assets/Gallery/blogs/architect.jpeg",
     },
     {
       id: 5,
@@ -58,7 +58,7 @@ const blogPosts = [
       date: "March 22, 2025",
       author: "David Brown",
       category: "Interior Design",
-      image: "./blog-5.jpg",
+      image: "/assets/Gallery/proj1/4.jpg",
     },
     {
       id: 6,
@@ -68,7 +68,7 @@ const blogPosts = [
       date: "March 10, 2025",
       author: "Emily Davis",
       category: "Construction",
-      image: "./blog-6.jpg",
+      image: "/assets/Gallery/proj8/18.jpg",
     },
 ]
 
@@ -112,7 +112,7 @@ export default function BlogDetailPage() {
                             alt={currentPost.title}
                             width={800}
                             height={500}
-                            className="rounded-lg mb-8 object-cover w-full h-[400px]"
+                            className="rounded-lg mb-8 object-cover w-full h-full"
                         />
                         <p className="text-lg leading-relaxed text-gray-700 dark:text-gray-300 whitespace-pre-line">
                             {currentPost.content}

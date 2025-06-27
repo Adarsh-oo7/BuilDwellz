@@ -218,15 +218,12 @@ export default function ContactPage() {
               <h2 className="text-3xl font-bold mb-6">Visit Our Office</h2>
               <div className="rounded-lg overflow-hidden h-[400px] mb-6 shadow-lg">
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31579.82872848!2d76.6929366!3d8.7378759!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b05ef26d90c1e8d%3A0x7e30a09d8abeeae7!2sVarkala%2C%20Kerala!5e0!3m2!1sen!2sin!4v1652345678901!5m2!1sen!2sin"
-                  width="100%"
-                  height="100%"
-                  style={{ border: 0 }}
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15773.798222523037!2d76.7242339942454!3d8.74370181090545!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b05e96768ea198d%3A0x9855c817defe8dae!2sBuildwellz%20designers%20and%20builders!5e0!3m2!1sen!2sin!4v1751050127230!5m2!1sen!2sin"
+                  className="w-full h-full border-0"
                   allowFullScreen
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
-                ></iframe>
-              </div>
+                ></iframe>              </div>
               <Card className="bg-muted hover:shadow-lg transition-shadow duration-300">
                 <CardContent className="p-6">
                   <h3 className="text-xl font-bold mb-4">Office Hours</h3>

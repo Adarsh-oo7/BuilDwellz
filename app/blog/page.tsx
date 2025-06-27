@@ -33,7 +33,7 @@ export default function BlogPage() {
       date: "April 28, 2025",
       author: "Jane Smith",
       category: "Vaasthu",
-      image: "./blog-2.jpg",
+      image: "/assets/Gallery/blogs/Vastu Chart-Photoroom.png",
     },
     {
       id: 3,
@@ -45,7 +45,7 @@ export default function BlogPage() {
       date: "April 15, 2025",
       author: "Michael Johnson",
       category: "Sustainability",
-      image: "./blog-3.jpg",
+      image: "/assets/Gallery/blogs/sustainable-home-tech.jpg",
     },
     {
       id: 4,
@@ -56,7 +56,7 @@ export default function BlogPage() {
       date: "April 5, 2025",
       author: "Sarah Williams",
       category: "Planning",
-      image: "./blog-4.jpg",
+      image: "/assets/Gallery/blogs/architect.jpeg",
     },
     {
       id: 5,
@@ -67,7 +67,7 @@ export default function BlogPage() {
       date: "March 22, 2025",
       author: "David Brown",
       category: "Interior Design",
-      image: "./blog-5.jpg",
+      image: "/assets/Gallery/proj1/4.jpg",
     },
     {
       id: 6,
@@ -78,7 +78,7 @@ export default function BlogPage() {
       date: "March 10, 2025",
       author: "Emily Davis",
       category: "Construction",
-      image: "./blog-6.jpg",
+      image: "/assets/Gallery/proj8/18.jpg",
     },
   ]
 
@@ -106,7 +106,7 @@ export default function BlogPage() {
   return (
     <div>
       {/* Hero Section */}
-      <section className="pt-32 pb-20 bg-muted">
+      <section className="pt-32  bg-muted">
         <div className="container mx-auto px-4 text-center">
           <ScrollReveal>
             <h1 className="text-4xl md:text-5xl font-bold mb-6 gradient-text">Our Blog</h1>
@@ -118,7 +118,7 @@ export default function BlogPage() {
       </section>
 
       {/* Featured Post */}
-      <section className="py-20">
+      <section className="pt-20 pb-20">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <ScrollReveal direction="left">
@@ -158,7 +158,7 @@ export default function BlogPage() {
       </section>
 
       {/* Blog Posts */}
-      <ParallaxSection className="py-20 bg-muted">
+      <div className="pt-20 pb-20 bg-muted">
         <div className="container mx-auto px-4">
           <ScrollReveal>
             <h2 className="text-3xl font-bold mb-12 text-center">Latest Articles</h2>
@@ -194,7 +194,6 @@ export default function BlogPage() {
                     </h3>
                     <p className="text-muted-foreground mb-4">{post.excerpt}</p>
                     <div className="flex items-center justify-between">
-                      <span className="text-sm text-muted-foreground">By {post.author}</span>
                       <Link href={`/blog/${post.id}`} className="text-primary flex items-center group">
                         Read more{" "}
                         <ChevronRight className="h-4 w-4 ml-1 transition-transform group-hover:translate-x-1" />
@@ -206,10 +205,11 @@ export default function BlogPage() {
             ))}
           </motion.div>
         </div>
-      </ParallaxSection>
+      </div>
+
 
       {/* Newsletter */}
-      <section className="py-20 bg-black text-white relative overflow-hidden">
+      <section className="pt-10 pb-20 bg-black text-white relative overflow-hidden">
         <div className="absolute -top-16 -left-16 w-32 h-32 rounded-full bg-primary/10 blur-3xl"></div>
         <div className="absolute -bottom-16 -right-16 w-32 h-32 rounded-full bg-secondary/10 blur-3xl"></div>
 
@@ -227,7 +227,7 @@ export default function BlogPage() {
                   className="flex-1 px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-secondary"
                   required
                 />
-                <Button 
+                <Button
                   className="bg-secondary text-secondary-foreground hover:bg-secondary/90"
                   onClick={handleSubscribe}
                 >

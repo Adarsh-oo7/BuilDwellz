@@ -42,7 +42,7 @@ export default function AboutPage() {
             <div className="relative">
               <div className="absolute -top-4 -left-4 w-24 h-24 bg-secondary rounded-tl-lg z-0"></div>
               <Image
-                src="./project-3.jpg"
+                src="./offc.jpg"
                 alt="BuilDwellz team"
                 width={600}
                 height={400}
@@ -53,6 +53,38 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+
+
+      <section className="py-20 bg-white">
+  <div className="container mx-auto px-4 text-center">
+    {/* <h2 className="text-3xl md:text-4xl font-bold mb-10">Gallery</h2> */}
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+      {[
+        "/assets/Initiatives/IMG-20250627-WA0010.jpg",
+        "/assets/Initiatives/IMG-20250627-WA0011.jpg",
+        "/assets/Initiatives/IMG-20250627-WA0012.jpg",
+        "/assets/Initiatives/IMG-20250627-WA0013.jpg",
+        "/assets/Initiatives/IMG-20250627-WA0015.jpg",
+        "/assets/Initiatives/IMG-20250627-WA0016.jpg",
+
+      ].map((src, idx) => (
+        <div
+          key={idx}
+          className="relative overflow-hidden rounded-xl shadow-lg group"
+        >
+          <Image
+            src={src}
+            alt={`Gallery ${idx + 1}`}
+            width={400}
+            height={300}
+            className="object-cover w-full h-64 group-hover:scale-105 transition-transform duration-500"
+          />
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
 
       {/* Our Values */}
       <section className="py-20 bg-muted">
@@ -109,50 +141,58 @@ export default function AboutPage() {
       </section>
 
       {/* Our Team */}
+      {/* Our Team */}
       <section className="py-20">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Meet Our Team</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">The Founder</h2>
             <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-              Our talented team of professionals is dedicated to bringing your vision to life.
+              Meet the visionary behind BuilDwellz, whose dedication and expertise drive our mission to create exceptional spaces.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              {
-                name: "John Doe",
-                position: "Principal Architect",
-                bio: "With over 15 years of experience in architectural design, John leads our design team with creativity and precision.",
-                image: "./team-1.jpg",
-              },
-              {
-                name: "Jane Smith",
-                position: "Interior Designer",
-                bio: "Jane specializes in creating beautiful, functional interiors that reflect the unique personality and lifestyle of our clients.",
-                image: "./team-2.jpg",
-              },
-              {
-                name: "Michael Johnson",
-                position: "Construction Manager",
-                bio: "Michael oversees all construction projects, ensuring quality workmanship and adherence to timelines and budgets.",
-                image: "./team-3.jpg",
-              },
-            ].map((member, index) => (
-              <div key={index} className="bg-background rounded-lg overflow-hidden shadow-md">
-                <div className="relative h-80">
-                  <Image src={member.image || "/placeholder.svg"} alt={member.name} fill className="object-cover" />
+
+          <div className="flex justify-center">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-fit">
+              {[
+                {
+                  name: "Vipin Mohan",
+                  position: "Founder",
+                  bio: "With over 6 years of experience as a Civil Engineer in Muscat, I served as the main engineer on numerous projects and successfully delivered work for more than 20 clients with a focus on quality and precision.",
+                  image: "/assets/Gallery/Team/team2.jpg",
+                },
+                {
+                  name: "Ajith A R",
+                  position: "Founder",
+                  bio: "As a designer and architect, I blend creativity with structural expertise to craft spaces that are both beautiful and functional. I specialize in turning client visions into timeless, livable designs.",
+                  image: "/assets/Gallery/Team/team1.jpg",
+                },
+              ].map((member, index) => (
+                <div
+                  key={index}
+                  className="bg-background rounded-lg overflow-hidden shadow-md w-full max-w-[350px] mx-auto"
+                >
+                  <div className="relative aspect-square">
+                    <Image
+                      src={member.image || "/placeholder.svg"}
+                      alt={member.name}
+                      fill
+                      className="object-contain"
+                    />
+                  </div>
+                  <div className="p-4">
+                    <h3 className="text-lg font-bold mb-1">{member.name}</h3>
+                    <p className="text-primary mb-3 text-sm">{member.position}</p>
+                    <p className="text-muted-foreground text-sm">{member.bio}</p>
+                  </div>
                 </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-bold mb-1">{member.name}</h3>
-                  <p className="text-primary mb-4">{member.position}</p>
-                  <p className="text-muted-foreground">{member.bio}</p>
-                </div>
-              </div>
-            ))}
+              ))}
+
+            </div>
           </div>
         </div>
       </section>
+
 
       {/* Why Choose Us */}
       <section className="py-20 bg-black text-white">
