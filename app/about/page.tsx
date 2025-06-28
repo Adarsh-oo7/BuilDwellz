@@ -1,9 +1,51 @@
+'use client'
 import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Award, Users, Clock, ThumbsUp } from "lucide-react"
+import { useState } from "react";
+
 
 export default function AboutPage() {
+
+
+
+  // Inside AboutPage component...
+
+  const galleryImages = [
+    "/assets/Initiatives/IMG-20250627-WA0010.jpg",
+    "/assets/Initiatives/IMG-20250627-WA0011.jpg",
+    "/assets/Initiatives/IMG-20250627-WA0012.jpg",
+    "/assets/Initiatives/IMG-20250627-WA0013.jpg",
+    "/assets/Initiatives/IMG-20250627-WA0015.jpg",
+    "/assets/Initiatives/IMG-20250627-WA0016.jpg",
+  ];
+
+  const [isOpen, setIsOpen] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const openGallery = (index: number) => {
+    setCurrentIndex(index);
+    setIsOpen(true);
+  };
+
+  const closeGallery = () => {
+    setIsOpen(false);
+  };
+
+  const prevImage = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setCurrentIndex((prev) => (prev === 0 ? galleryImages.length - 1 : prev - 1));
+  };
+
+  const nextImage = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setCurrentIndex((prev) => (prev === galleryImages.length - 1 ? 0 : prev + 1));
+  };
+
+
+
+
   return (
     <>
       {/* Hero Section */}
@@ -56,34 +98,71 @@ export default function AboutPage() {
 
 
       <section className="py-20 bg-white">
-  <div className="container mx-auto px-4 text-center">
-    {/* <h2 className="text-3xl md:text-4xl font-bold mb-10">Gallery</h2> */}
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-      {[
-        "/assets/Initiatives/IMG-20250627-WA0010.jpg",
-        "/assets/Initiatives/IMG-20250627-WA0011.jpg",
-        "/assets/Initiatives/IMG-20250627-WA0012.jpg",
-        "/assets/Initiatives/IMG-20250627-WA0013.jpg",
-        "/assets/Initiatives/IMG-20250627-WA0015.jpg",
-        "/assets/Initiatives/IMG-20250627-WA0016.jpg",
-
-      ].map((src, idx) => (
-        <div
-          key={idx}
-          className="relative overflow-hidden rounded-xl shadow-lg group"
-        >
-          <Image
-            src={src}
-            alt={`Gallery ${idx + 1}`}
-            width={400}
-            height={300}
-            className="object-cover w-full h-64 group-hover:scale-105 transition-transform duration-500"
-          />
+        <div className="container mx-auto px-4 text-center">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            {galleryImages.map((src, idx) => (
+              <div
+                key={idx}
+                className="relative overflow-hidden rounded-xl shadow-lg group cursor-pointer"
+                onClick={() => openGallery(idx)}
+              >
+                <Image
+                  src={src}
+                  alt={`Gallery ${idx + 1}`}
+                  width={400}
+                  height={300}
+                  className="object-cover w-full h-64 group-hover:scale-105 transition-transform duration-500"
+                />
+              </div>
+            ))}
+          </div>
         </div>
-      ))}
-    </div>
-  </div>
-</section>
+
+        {/* Popup Modal */}
+        {isOpen && (
+          <div
+            className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50"
+            onClick={closeGallery}
+          >
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                closeGallery();
+              }}
+              className="absolute top-8 right-8 text-white text-3xl font-bold hover:text-red-500"
+              aria-label="Close gallery"
+            >
+              &times;
+            </button>
+
+            <button
+              onClick={prevImage}
+              className="absolute left-8 text-white text-4xl font-bold hover:text-gray-300"
+              aria-label="Previous image"
+            >
+              &#8592;
+            </button>
+
+            <Image
+              src={galleryImages[currentIndex]}
+              alt={`Gallery ${currentIndex + 1}`}
+              width={800}
+              height={600}
+              className="rounded-lg shadow-lg"
+              onClick={(e) => e.stopPropagation()}
+            />
+
+            <button
+              onClick={nextImage}
+              className="absolute right-8 text-white text-4xl font-bold hover:text-gray-300"
+              aria-label="Next image"
+            >
+              &#8594;
+            </button>
+          </div>
+        )}
+      </section>
+
 
 
       {/* Our Values */}

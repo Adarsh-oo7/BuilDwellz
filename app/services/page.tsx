@@ -27,7 +27,7 @@ export default function ServicesPage() {
       title: "Vaasthu Consulting",
       description:
         "We incorporate traditional Vaasthu principles into modern architectural designs to create harmonious living spaces. Our Vaasthu consultants ensure proper orientation, room placement, and energy flow to promote positive energy and well-being in your home.",
-      image: "./s4.jpg",
+      image: "./vasthu.jpg",
     },
     {
       id: "estimation",
