@@ -72,6 +72,14 @@ const blogPosts = [
     },
 ]
 
+
+export async function generateStaticParams() {
+  // Generate static params for all blog post IDs
+  return blogPosts.map((post) => ({
+    id: post.id.toString(), // Convert to string as URL params are always strings
+  }));
+}
+
 export default function BlogDetailPage() {
     const { id } = useParams()
     const currentPost = blogPosts.find((p) => p.id === Number(id))
