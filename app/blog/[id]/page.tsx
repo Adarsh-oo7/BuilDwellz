@@ -1,12 +1,10 @@
-"use client"
-
-import { useParams } from "next/navigation"
 import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { ScrollReveal } from "@/components/scroll-reveal"
 import { Card, CardContent } from "@/components/ui/card"
 import { ArrowLeft, ChevronRight } from "lucide-react"
+import BlogDetailClient from './BlogDetailClient'
 
 const blogPosts = [
     {
@@ -23,7 +21,7 @@ const blogPosts = [
         id: 2,
         title: "The Importance of Vaasthu in Home Design",
         excerpt: "Learn how traditional Vaasthu principles...",
-        content: "Discover how ancient wisdom meets modern living in The Importance of Vaasthu in Home Design. This blog explores the timeless principles of Vaasthu Shastra—India’s traditional system of architecture—and how they continue to influence home design today. From the optimal placement of rooms to the flow of energy within a space, we delve into how Vaasthu creates harmony, balance, and positivity in your living environment.Whether you're building a new home, renovating, or simply curious about the spiritual and practical benefits of Vaasthu, this blog offers clear guidance and insights. Learn how aligning your home with these age-old principles can enhance well-being, prosperity, and peace of mind. Step into a world where tradition and design work hand in hand to create a truly mindful and meaningful space.",
+        content: "Discover how ancient wisdom meets modern living in The Importance of Vaasthu in Home Design. This blog explores the timeless principles of Vaasthu Shastra—India's traditional system of architecture—and how they continue to influence home design today. From the optimal placement of rooms to the flow of energy within a space, we delve into how Vaasthu creates harmony, balance, and positivity in your living environment.Whether you're building a new home, renovating, or simply curious about the spiritual and practical benefits of Vaasthu, this blog offers clear guidance and insights. Learn how aligning your home with these age-old principles can enhance well-being, prosperity, and peace of mind. Step into a world where tradition and design work hand in hand to create a truly mindful and meaningful space.",
         date: "April 28, 2025",
         author: "Jane Smith",
         category: "Vaasthu",
@@ -72,7 +70,7 @@ const blogPosts = [
     },
 ]
 
-
+// This function is required for static export with dynamic routes
 export async function generateStaticParams() {
   // Generate static params for all blog post IDs
   return blogPosts.map((post) => ({
@@ -80,9 +78,8 @@ export async function generateStaticParams() {
   }));
 }
 
-export default function BlogDetailPage() {
-    const { id } = useParams()
-    const currentPost = blogPosts.find((p) => p.id === Number(id))
+export default function BlogDetailPage({ params }: { params: { id: string } }) {
+    const currentPost = blogPosts.find((p) => p.id === Number(params.id))
 
     if (!currentPost) {
         return (
@@ -98,109 +95,5 @@ export default function BlogDetailPage() {
         )
     }
 
-    const otherPosts = blogPosts.filter((p) => p.id !== Number(id))
-    const sidebarPosts = otherPosts.slice(0, 3)
-    const belowContentPosts = otherPosts.slice(3)
-
-    return (
-        <div className="pt-32 pb-20 bg-muted min-h-screen">
-            <div className="container mx-auto px-4 grid grid-cols-1 lg:grid-cols-3 gap-12">
-                {/* Main Content */}
-                <div className="lg:col-span-2">
-                    <ScrollReveal>
-                        <div className="mb-4 flex items-center gap-4 text-sm text-muted-foreground">
-                            <span className="bg-secondary text-secondary-foreground px-3 py-1 rounded-full">
-                                {currentPost.category}
-                            </span>
-                            <span>{currentPost.date}</span>
-                        </div>
-                        <h1 className="text-4xl font-bold mb-4">{currentPost.title}</h1>
-                        <Image
-                            src={currentPost.image}
-                            alt={currentPost.title}
-                            width={800}
-                            height={500}
-                            className="rounded-lg mb-8 object-cover w-full h-full"
-                        />
-                        <p className="text-lg leading-relaxed text-gray-700 dark:text-gray-300 whitespace-pre-line">
-                            {currentPost.content}
-                        </p>
-                        <div className="mt-10">
-                            <Link href="/blog">
-                                <Button variant="outline" className="flex items-center gap-2">
-                                    <ArrowLeft className="w-4 h-4" />
-                                    Back to Blog
-                                </Button>
-                            </Link>
-                        </div>
-                    </ScrollReveal>
-                </div>
-
-                {/* Sidebar */}
-                <aside className="lg:col-span-1">
-                    <ScrollReveal>
-                        <h2 className="text-xl font-bold mb-6">Other Posts</h2>
-                        <div className="flex flex-col gap-4">
-                            {sidebarPosts.map((post) => (
-                                <Card
-                                    key={post.id}
-                                    className={`overflow-hidden group transition-shadow duration-300 w-full p-2 hover:shadow-md`}
-                                >
-                                    <div className="relative h-48 w-full rounded-md overflow-hidden">
-                                        <Image
-                                            src={post.image || "/placeholder.svg"}
-                                            alt={post.title}
-                                            fill
-                                            className="object-cover"
-                                        />
-                                    </div>
-                                    <CardContent className="p-2">
-                                        <Link
-                                            href={`/blog/${post.id}`}
-                                            className="text-sm font-medium text-primary hover:underline block text-center mt-2"
-                                        >
-                                            {post.title}
-                                        </Link>
-                                    </CardContent>
-                                </Card>
-                            ))}
-                        </div>
-                    </ScrollReveal>
-                </aside>
-            </div>
-
-            {/* Overflow Cards - Below Content */}
-            {belowContentPosts.length > 0 && (
-                <div className="container mx-auto px-4 mt-16">
-                    {/* <h2 className="text-2xl font-bold mb-6">More Posts</h2> */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                        {belowContentPosts.map((post) => (
-                            <Card
-                                key={post.id}
-                                className="overflow-hidden group transition-shadow duration-300 p-2 hover:shadow-md"
-                            >
-                                <div className="relative h-48 w-full rounded-md overflow-hidden">
-                                    <Image
-                                        src={post.image || "/placeholder.svg"}
-                                        alt={post.title}
-                                        fill
-                                        className="object-cover"
-                                    />
-                                </div>
-                                <CardContent className="p-2">
-                                    <Link
-                                        href={`/blog/${post.id}`}
-                                        className="text-sm font-medium text-primary hover:underline block text-center mt-2"
-                                    >
-                                        {post.title}
-                                    </Link>
-                                </CardContent>
-                            </Card>
-                        ))}
-                    </div>
-                </div>
-            )}
-        </div>
-    )
+    return <BlogDetailClient currentPost={currentPost} blogPosts={blogPosts} />
 }
-
