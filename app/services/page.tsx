@@ -19,7 +19,7 @@ export default function ServicesPage() {
       title: "3D Design",
       description:
         "Visualize your project before construction begins with our realistic 3D renderings. Our 3D designs help you understand spatial relationships, material choices, lighting effects, and overall aesthetics, allowing for adjustments before the actual construction phase.",
-      image: "./s2.jpg",
+      image: "../s2.jpg",
     },
     {
       id: "vaasthu-consulting",
@@ -27,7 +27,7 @@ export default function ServicesPage() {
       title: "Vaasthu Consulting",
       description:
         "We incorporate traditional Vaasthu principles into modern architectural designs to create harmonious living spaces. Our Vaasthu consultants ensure proper orientation, room placement, and energy flow to promote positive energy and well-being in your home.",
-      image: "./vasthu.jpg",
+      image: "../vasthu.jpg",
     },
     {
       id: "estimation",
@@ -67,7 +67,7 @@ export default function ServicesPage() {
       title: "Interior Designing",
       description:
         "Transform your space with our comprehensive interior design services. From space planning and material selection to furniture arrangement and decor, our interior designers create functional, aesthetically pleasing interiors that reflect your personal style and enhance your quality of life.",
-      image: "./s6.jpg",
+      image: "../s6.jpg",
     },
   ]
 

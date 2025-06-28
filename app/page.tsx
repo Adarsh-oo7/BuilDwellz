@@ -115,7 +115,7 @@ useEffect(() => {
       location: "Varkala",
       rating: 5,
       text: "BuilDwellz transformed our dream home into reality. Their attention to detail and professionalism exceeded our expectations.",
-      image: "./testimonial1.jpg",
+      image: "../testimonial1.jpg",
     },
      {
       name: "Shaiju",
@@ -137,19 +137,19 @@ useEffect(() => {
     {
       title: "Modern Villa",
       location: "Panayara, Trivandrum",
-      image: "./assets/Gallery/proj4/p1.jpg",
+      image: "../assets/Gallery/proj4/p1.jpg",
       type: "Residential",
     },
     {
       title: "Modern Villa",
       location: "Kollam, Paravur",
-      image: "./assets/Gallery/proj1/p1.jpg",
+      image: "../assets/Gallery/proj1/p1.jpg",
       type: "Residential",
     },
      {
       title: "Traditional Home",
       location: "Varkala, Trivandrum",
-      image: "./assets/Gallery/proj3/p2.jpg",
+      image: "../assets/Gallery/proj3/p2.jpg",
       type: "Residential",
     },
   

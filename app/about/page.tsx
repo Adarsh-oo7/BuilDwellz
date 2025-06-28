@@ -13,12 +13,12 @@ export default function AboutPage() {
   // Inside AboutPage component...
 
   const galleryImages = [
-    "/assets/Initiatives/IMG-20250627-WA0010.jpg",
-    "/assets/Initiatives/IMG-20250627-WA0011.jpg",
-    "/assets/Initiatives/IMG-20250627-WA0012.jpg",
-    "/assets/Initiatives/IMG-20250627-WA0013.jpg",
-    "/assets/Initiatives/IMG-20250627-WA0015.jpg",
-    "/assets/Initiatives/IMG-20250627-WA0016.jpg",
+    "../assets/Initiatives/IMG-20250627-WA0010.jpg",
+    "../assets/Initiatives/IMG-20250627-WA0011.jpg",
+    "../assets/Initiatives/IMG-20250627-WA0012.jpg",
+    "../assets/Initiatives/IMG-20250627-WA0013.jpg",
+    "../assets/Initiatives/IMG-20250627-WA0015.jpg",
+    "../assets/Initiatives/IMG-20250627-WA0016.jpg",
   ];
 
   const [isOpen, setIsOpen] = useState(false);
@@ -84,7 +84,7 @@ export default function AboutPage() {
             <div className="relative">
               <div className="absolute -top-4 -left-4 w-24 h-24 bg-secondary rounded-tl-lg z-0"></div>
               <Image
-                src="./offc.jpg"
+                src="../offc.jpg"
                 alt="BuilDwellz team"
                 width={600}
                 height={400}
@@ -238,13 +238,13 @@ export default function AboutPage() {
                   name: "Vipin Mohan",
                   position: "Founder",
                   bio: "With over 6 years of experience as a Civil Engineer in Muscat, I served as the main engineer on numerous projects and successfully delivered work for more than 20 clients with a focus on quality and precision.",
-                  image: "/assets/Gallery/Team/team2.jpg",
+                  image: "../assets/Gallery/Team/team2.jpg",
                 },
                 {
                   name: "Ajith A R",
                   position: "Founder",
                   bio: "As a designer and architect, I blend creativity with structural expertise to craft spaces that are both beautiful and functional. I specialize in turning client visions into timeless, livable designs.",
-                  image: "/assets/Gallery/Team/team1.jpg",
+                  image: "../assets/Gallery/Team/team1.jpg",
                 },
               ].map((member, index) => (
                 <div
