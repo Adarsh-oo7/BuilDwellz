@@ -57,7 +57,7 @@ export default function ProjectsPage() {
       location: "Kollam, Paravur",
       year: "2024",
       description: "A contemporary villa with open spaces and natural light.",
-      image: "/assets/Gallery/proj1/p1.jpg",
+      image: "./assets/Gallery/proj1/p1.jpg",
     },
     {
       id: 2,
@@ -66,7 +66,7 @@ export default function ProjectsPage() {
       location: "Narikkal",
       year: "2024",
       description: "High-end apartment with premium finishes and smart home features.",
-      image: "/assets/Gallery/proj2/front.jpg",
+      image: "./assets/Gallery/proj2/front.jpg",
     },
     {
       id: 3,
@@ -75,7 +75,7 @@ export default function ProjectsPage() {
       location: "Varkala, Trivandrum",
       year: "2024",
       description: "A contemporary villa with open spaces and natural light.",
-      image: "/assets/Gallery/proj3/p2.jpg",
+      image: "./assets/Gallery/proj3/p2.jpg",
     },
     {
       id: 4,
@@ -84,7 +84,7 @@ export default function ProjectsPage() {
       location: "Panayara, Trivandrum",
       year: "2023",
       description: "A contemporary villa with open spaces and natural light.",
-      image: "/assets/Gallery/proj4/p1.jpg",
+      image: "./assets/Gallery/proj4/p1.jpg",
     },
     {
       id: 5,
@@ -93,7 +93,7 @@ export default function ProjectsPage() {
       location: "Varkala. Trivandrum",
       year: "2024",
       description: "A contemporary villa with open spaces and natural light.",
-      image: "/assets/Gallery/proj5/front.jpg",
+      image: "./assets/Gallery/proj5/front.jpg",
     },
     {
       id: 6,
@@ -102,7 +102,7 @@ export default function ProjectsPage() {
       location: "Varkala",
       year: "2025",
       description: "A contemporary villa with open spaces and natural light.",
-      image: "/assets/Gallery/proj6/front.jpg",
+      image: "./assets/Gallery/proj6/front.jpg",
     },
     {
       id: 7,
@@ -111,7 +111,7 @@ export default function ProjectsPage() {
       location: "Pravachambalam,Trivandrum",
       year: "2022",
       description: "Modern retail space designed to enhance customer experience.",
-      image: "/assets/Gallery/proj7/front.jpg",
+      image: "./assets/Gallery/proj7/front.jpg",
     },
     {
       id: 8,
@@ -120,7 +120,7 @@ export default function ProjectsPage() {
       location: "Uloor,Trivandrum",
       year: "2022",
       description: "Modern retail space designed to enhance customer experience.",
-      image: "/assets/Gallery/proj8/front.jpg",
+      image: "./assets/Gallery/proj8/front.jpg",
     },
     {
       id: 9,
@@ -129,7 +129,7 @@ export default function ProjectsPage() {
       location: "Varkala",
       year: "2024",
       description: "Sustainable home with energy-efficient features and natural materials.",
-      image: "/assets/Gallery/proj9/front.jpg",
+      image: "./assets/Gallery/proj9/front.jpg",
     },
   ]
 
