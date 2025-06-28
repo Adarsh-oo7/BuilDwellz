@@ -1,16 +1,32 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Image from "next/image"
 import Link from "next/link"
+import dynamic from "next/dynamic"
 import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
 import { ScrollReveal } from "@/components/scroll-reveal"
 import { ParallaxSection } from "@/components/parallax-section"
 import { MagneticButton } from "@/components/magnetic-button"
-import RoomVisualizer from "@/components/3d/room-visualizer"
 import { ErrorBoundary } from "react-error-boundary"
+
+// Dynamically import RoomVisualizer with no SSR
+const RoomVisualizer = dynamic(
+  () => import("@/components/3d/room-visualizer"),
+  { 
+    ssr: false,
+    loading: () => (
+      <div className="flex items-center justify-center h-96 bg-muted rounded-lg">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
+          <p className="text-muted-foreground">Loading 3D Visualizer...</p>
+        </div>
+      </div>
+    )
+  }
+)
 
 // Define TypeScript interface for project data
 interface Project {
@@ -25,6 +41,12 @@ interface Project {
 
 export default function ProjectsPage() {
   const [activeTab, setActiveTab] = useState("all")
+  const [isClient, setIsClient] = useState(false)
+
+  // Ensure component is mounted on client side
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
 
   // Projects data with proper typing
   const projects: Project[] = [
@@ -145,29 +167,31 @@ export default function ProjectsPage() {
         </div>
       </section>
 
-      {/* 3D Room Visualizer */}
-      <section className="py-20 bg-background">
-        <div className="container mx-auto px-4">
-          <ScrollReveal>
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold mb-4">Interactive 3D Room Visualizer</h2>
-              <p className="text-muted-foreground max-w-3xl mx-auto">
-                Explore our designs in 3D. Rotate, zoom, and interact with the model to get a better understanding of
-                our work and visualize your future space.
-              </p>
-            </div>
-            <ErrorBoundary
-              fallback={
-                <div className="text-center p-12 bg-muted rounded-lg">
-                  <p className="text-lg font-medium">Failed to load 3D visualizer. Please refresh the page.</p>
-                </div>
-              }
-            >
-              <RoomVisualizer />
-            </ErrorBoundary>
-          </ScrollReveal>
-        </div>
-      </section>
+      {/* 3D Room Visualizer - Only render on client */}
+      {isClient && (
+        <section className="py-20 bg-background">
+          <div className="container mx-auto px-4">
+            <ScrollReveal>
+              <div className="text-center mb-12">
+                <h2 className="text-3xl font-bold mb-4">Interactive 3D Room Visualizer</h2>
+                <p className="text-muted-foreground max-w-3xl mx-auto">
+                  Explore our designs in 3D. Rotate, zoom, and interact with the model to get a better understanding of
+                  our work and visualize your future space.
+                </p>
+              </div>
+              <ErrorBoundary
+                fallback={
+                  <div className="text-center p-12 bg-muted rounded-lg">
+                    <p className="text-lg font-medium">Failed to load 3D visualizer. Please refresh the page.</p>
+                  </div>
+                }
+              >
+                <RoomVisualizer />
+              </ErrorBoundary>
+            </ScrollReveal>
+          </div>
+        </section>
+      )}
 
       {/* Projects Gallery */}
       <div className="py-20">
