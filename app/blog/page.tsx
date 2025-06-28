@@ -67,7 +67,8 @@ export default function BlogPage() {
       date: "March 22, 2025",
       author: "David Brown",
       category: "Interior Design",
-      image: "./assets/Gallery/proj1/4.jpg",
+       image: "./assets/Gallery/proj1/4.jpg",
+      // image: "../",
     },
     {
       id: 6,
