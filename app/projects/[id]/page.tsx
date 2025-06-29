@@ -14,6 +14,7 @@ export async function generateStaticParams() {
 }
 
 // Optional: Generate metadata for SEO
+
 export async function generateMetadata({ params }: Props) {
   const project = projects.find((p) => p.id === parseInt(params.id));
   
