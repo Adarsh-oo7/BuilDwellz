@@ -24,22 +24,40 @@ interface BlogDetailClientProps {
     blogPosts: BlogPost[];
 }
 
-// Helper function to fix image paths for Next.js static export
+// Improved helper function to fix image paths for different deployment scenarios
 const getImagePath = (path: string) => {
-  // Remove the ../ prefix and ensure it starts with /
-  let cleanPath = path.replace(/^\.\.\//, '/');
+  if (!path) return '/placeholder.svg';
   
-  // For GitHub Pages, detect if we're on a repository page (not a custom domain)
-  // This checks if the current URL contains github.io and adds the repo name as base path
+  // If path is already absolute or starts with http, return as is
+  if (path.startsWith('http') || path.startsWith('/')) {
+    return path;
+  }
+  
+  // Remove any ../ prefix and ensure it starts with /
+  let cleanPath = path.replace(/^\.\.\/+/, '').replace(/^\/+/, '');
+  cleanPath = '/' + cleanPath;
+  
+  // For production deployment, check if we need to add base path
   if (typeof window !== 'undefined' && process.env.NODE_ENV === 'production') {
     const currentUrl = window.location.href;
+    
+    // Check for GitHub Pages deployment
     if (currentUrl.includes('.github.io/')) {
-      // Extract repository name from URL
       const urlParts = currentUrl.split('.github.io/');
       if (urlParts.length > 1) {
-        const repoName = urlParts[1].split('/')[0];
-        return `/${repoName}${cleanPath}`;
+        const pathParts = urlParts[1].split('/');
+        if (pathParts[0] && pathParts[0] !== '') {
+          const repoName = pathParts[0];
+          return `/${repoName}${cleanPath}`;
+        }
       }
+    }
+    
+    // Check for other subdirectory deployments
+    const pathname = window.location.pathname;
+    const pathSegments = pathname.split('/').filter(Boolean);
+    if (pathSegments.length > 0 && !cleanPath.startsWith(`/${pathSegments[0]}`)) {
+      return `/${pathSegments[0]}${cleanPath}`;
     }
   }
   
@@ -74,14 +92,16 @@ export default function BlogDetailClient({ currentPost, blogPosts }: BlogDetailC
                         
                         {/* Main Post Image */}
                         {!imageErrors[currentPost.image] ? (
-                            <Image
-                                src={getImagePath(currentPost.image)}
-                                alt={currentPost.title}
-                                width={800}
-                                height={500}
-                                className="rounded-lg mb-8 object-cover w-full h-full"
-                                onError={() => handleImageError(currentPost.image)}
-                            />
+                            <div className="relative w-full h-[500px] rounded-lg overflow-hidden mb-8">
+                                <Image
+                                    src={getImagePath(currentPost.image)}
+                                    alt={currentPost.title}
+                                    fill
+                                    className="object-cover"
+                                    onError={() => handleImageError(currentPost.image)}
+                                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 66vw, 800px"
+                                />
+                            </div>
                         ) : (
                             <div className="w-full h-[500px] bg-gray-200 rounded-lg mb-8 flex items-center justify-center">
                                 <div className="text-center text-gray-500">
@@ -114,16 +134,17 @@ export default function BlogDetailClient({ currentPost, blogPosts }: BlogDetailC
                             {sidebarPosts.map((post) => (
                                 <Card
                                     key={post.id}
-                                    className={`overflow-hidden group transition-shadow duration-300 w-full p-2 hover:shadow-md`}
+                                    className="overflow-hidden group transition-shadow duration-300 w-full p-2 hover:shadow-md"
                                 >
                                     <div className="relative h-48 w-full rounded-md overflow-hidden">
                                         {!imageErrors[post.image] ? (
                                             <Image
-                                                src={getImagePath(post.image) || getImagePath("/placeholder.svg")}
+                                                src={getImagePath(post.image)}
                                                 alt={post.title}
                                                 fill
                                                 className="object-cover"
                                                 onError={() => handleImageError(post.image)}
+                                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 300px"
                                             />
                                         ) : (
                                             <div className="w-full h-full bg-gray-200 flex items-center justify-center">
@@ -161,11 +182,12 @@ export default function BlogDetailClient({ currentPost, blogPosts }: BlogDetailC
                                 <div className="relative h-48 w-full rounded-md overflow-hidden">
                                     {!imageErrors[post.image] ? (
                                         <Image
-                                            src={getImagePath(post.image) || getImagePath("/placeholder.svg")}
+                                            src={getImagePath(post.image)}
                                             alt={post.title}
                                             fill
                                             className="object-cover"
                                             onError={() => handleImageError(post.image)}
+                                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                         />
                                     ) : (
                                         <div className="w-full h-full bg-gray-200 flex items-center justify-center">
