@@ -15,6 +15,14 @@ export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
   const isMobile = useMobile();
+  
+  // Get the correct logo path based on current route
+  const getLogoPath = () => {
+    if (pathname === "/") {
+      return "./logo.png";
+    }
+    return "../logo.png";
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -127,7 +135,7 @@ export default function Navbar() {
             >
               <Link href="/" className="flex items-center">
                 <Image
-                  src="../logo.png"
+                  src={getLogoPath()}
                   alt="Logo"
                   width={150}
                   height={150}
