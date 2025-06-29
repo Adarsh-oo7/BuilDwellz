@@ -111,7 +111,7 @@ export default function ProjectsPage() {
       location: "Pravachambalam,Trivandrum",
       year: "2022",
       description: "Modern retail space designed to enhance customer experience.",
-      image: "../assets/Gallery/proj7/front.jpg",
+      image: "/assets/Gallery/proj7/front.jpg",
     },
     {
       id: 8,
