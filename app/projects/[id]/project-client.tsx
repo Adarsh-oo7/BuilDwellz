@@ -9,10 +9,10 @@ interface Props {
 }
 
 // Helper function to fix image paths for Next.js static export
-const getImagePath = (path: string) => {
-  // Remove the ../ prefix and ensure it starts with /
-  return path.replace(/^\.\.\//, '/');
-};
+// const getImagePath = (path: string) => {
+//   // Remove the ../ prefix and ensure it starts with /
+//   return path.replace(/^\.\.\//, '/');
+// };
 
 export default function ProjectClient({ project }: Props) {
   const [isOpen, setIsOpen] = useState(false);
