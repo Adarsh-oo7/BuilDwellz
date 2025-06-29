@@ -11,6 +11,7 @@ import { ScrollReveal } from "@/components/scroll-reveal"
 import { ParallaxSection } from "@/components/parallax-section"
 import { MagneticButton } from "@/components/magnetic-button"
 import { ErrorBoundary } from "react-error-boundary"
+import { Project } from "@/lib/projects"
 
 // Dynamically import RoomVisualizer with no SSR
 const RoomVisualizer = dynamic(
@@ -29,15 +30,15 @@ const RoomVisualizer = dynamic(
 )
 
 // Define TypeScript interface for project data
-interface Project {
-  id: number
-  title: string
-  category: "residential" | "commercial"
-  location: string
-  year: string
-  description: string
-  image: string
-}
+// interface Project {
+//   id: number
+//   title: string
+//   category: "residential" | "commercial"
+//   location: string
+//   year: string
+//   description: string
+//   image: string
+// }
 
 export default function ProjectsPage() {
   const [activeTab, setActiveTab] = useState("all")
@@ -49,89 +50,89 @@ export default function ProjectsPage() {
   }, [])
 
   // Projects data with proper typing
-  const projects: Project[] = [
-    {
-      id: 1,
-      title: "Modern Villa",
-      category: "residential",
-      location: "Kollam, Paravur",
-      year: "2024",
-      description: "A contemporary villa with open spaces and natural light.",
-      image: "../assets/Gallery/proj1/p1.jpg",
-    },
-    {
-      id: 2,
-      title: "Modern Villa",
-      category: "residential",
-      location: "Narikkal",
-      year: "2024",
-      description: "High-end apartment with premium finishes and smart home features.",
-      image: "../assets/Gallery/proj2/front.jpg",
-    },
-    {
-      id: 3,
-      title: "Modern Home",
-      category: "residential",
-      location: "Varkala, Trivandrum",
-      year: "2024",
-      description: "A contemporary villa with open spaces and natural light.",
-      image: "../assets/Gallery/proj3/p2.jpg",
-    },
-    {
-      id: 4,
-      title: "Traditional",
-      category: "residential",
-      location: "Panayara, Trivandrum",
-      year: "2023",
-      description: "A contemporary villa with open spaces and natural light.",
-      image: "../assets/Gallery/proj4/p1.jpg",
-    },
-    {
-      id: 5,
-      title: "Modern Villa",
-      category: "residential",
-      location: "Varkala. Trivandrum",
-      year: "2024",
-      description: "A contemporary villa with open spaces and natural light.",
-      image: "../assets/Gallery/proj5/front.jpg",
-    },
-    {
-      id: 6,
-      title: "Modern Villa",
-      category: "residential",
-      location: "Varkala",
-      year: "2025",
-      description: "A contemporary villa with open spaces and natural light.",
-      image: "../assets/Gallery/proj6/front.jpg",
-    },
-    {
-      id: 7,
-      title: "Retail store",
-      category: "commercial",      
-      location: "Pravachambalam,Trivandrum",
-      year: "2022",
-      description: "Modern retail space designed to enhance customer experience.",
-      image: "/assets/Gallery/proj7/front.jpg",
-    },
-    {
-      id: 8,
-      title: "Modern Home",
-      category: "residential",
-      location: "Uloor,Trivandrum",
-      year: "2022",
-      description: "Modern retail space designed to enhance customer experience.",
-      image: "../assets/Gallery/proj8/front.jpg",
-    },
-    {
-      id: 9,
-      title: "Eco-Friendly Home",
-      category: "residential",
-      location: "Varkala",
-      year: "2024",
-      description: "Sustainable home with energy-efficient features and natural materials.",
-      image: "../assets/Gallery/proj9/front.jpg",
-    },
-  ]
+  // const projects: Project[] = [
+  //   {
+  //     id: 1,
+  //     title: "Modern Villa",
+  //     category: "residential",
+  //     location: "Kollam, Paravur",
+  //     year: "2024",
+  //     description: "A contemporary villa with open spaces and natural light.",
+  //     image: "../assets/Gallery/proj1/p1.jpg",
+  //   },
+  //   {
+  //     id: 2,
+  //     title: "Modern Villa",
+  //     category: "residential",
+  //     location: "Narikkal",
+  //     year: "2024",
+  //     description: "High-end apartment with premium finishes and smart home features.",
+  //     image: "../assets/Gallery/proj2/front.jpg",
+  //   },
+  //   {
+  //     id: 3,
+  //     title: "Modern Home",
+  //     category: "residential",
+  //     location: "Varkala, Trivandrum",
+  //     year: "2024",
+  //     description: "A contemporary villa with open spaces and natural light.",
+  //     image: "../assets/Gallery/proj3/p2.jpg",
+  //   },
+  //   {
+  //     id: 4,
+  //     title: "Traditional",
+  //     category: "residential",
+  //     location: "Panayara, Trivandrum",
+  //     year: "2023",
+  //     description: "A contemporary villa with open spaces and natural light.",
+  //     image: "../assets/Gallery/proj4/p1.jpg",
+  //   },
+  //   {
+  //     id: 5,
+  //     title: "Modern Villa",
+  //     category: "residential",
+  //     location: "Varkala. Trivandrum",
+  //     year: "2024",
+  //     description: "A contemporary villa with open spaces and natural light.",
+  //     image: "../assets/Gallery/proj5/front.jpg",
+  //   },
+  //   {
+  //     id: 6,
+  //     title: "Modern Villa",
+  //     category: "residential",
+  //     location: "Varkala",
+  //     year: "2025",
+  //     description: "A contemporary villa with open spaces and natural light.",
+  //     image: "../assets/Gallery/proj6/front.jpg",
+  //   },
+  //   {
+  //     id: 7,
+  //     title: "Retail store",
+  //     category: "commercial",      
+  //     location: "Pravachambalam,Trivandrum",
+  //     year: "2022",
+  //     description: "Modern retail space designed to enhance customer experience.",
+  //     image: "/assets/Gallery/proj7/front.jpg",
+  //   },
+  //   {
+  //     id: 8,
+  //     title: "Modern Home",
+  //     category: "residential",
+  //     location: "Uloor,Trivandrum",
+  //     year: "2022",
+  //     description: "Modern retail space designed to enhance customer experience.",
+  //     image: "../assets/Gallery/proj8/front.jpg",
+  //   },
+  //   {
+  //     id: 9,
+  //     title: "Eco-Friendly Home",
+  //     category: "residential",
+  //     location: "Varkala",
+  //     year: "2024",
+  //     description: "Sustainable home with energy-efficient features and natural materials.",
+  //     image: "../assets/Gallery/proj9/front.jpg",
+  //   },
+  // ]
 
   const containerVariants = {
     hidden: { opacity: 0 },
