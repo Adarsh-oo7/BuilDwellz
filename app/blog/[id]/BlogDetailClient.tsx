@@ -26,8 +26,24 @@ interface BlogDetailClientProps {
 
 // Helper function to fix image paths for Next.js static export
 const getImagePath = (path: string) => {
-    // Remove the ../ prefix and ensure it starts with /
-    return path.replace(/^\.\.\//, '/');
+  // Remove the ../ prefix and ensure it starts with /
+  let cleanPath = path.replace(/^\.\.\//, '/');
+  
+  // For GitHub Pages, detect if we're on a repository page (not a custom domain)
+  // This checks if the current URL contains github.io and adds the repo name as base path
+  if (typeof window !== 'undefined' && process.env.NODE_ENV === 'production') {
+    const currentUrl = window.location.href;
+    if (currentUrl.includes('.github.io/')) {
+      // Extract repository name from URL
+      const urlParts = currentUrl.split('.github.io/');
+      if (urlParts.length > 1) {
+        const repoName = urlParts[1].split('/')[0];
+        return `/${repoName}${cleanPath}`;
+      }
+    }
+  }
+  
+  return cleanPath;
 };
 
 export default function BlogDetailClient({ currentPost, blogPosts }: BlogDetailClientProps) {
