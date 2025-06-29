@@ -15,7 +15,7 @@ const blogPosts = [
         date: "May 10, 2025",
         author: "John Doe",
         category: "Design Trends",
-        image: "/assets/Gallery/proj1/p1.jpg",
+        image: "../assets/Gallery/proj1/p1.jpg",
     },
     {
         id: 2,
@@ -25,7 +25,7 @@ const blogPosts = [
         date: "April 28, 2025",
         author: "Jane Smith",
         category: "Vaasthu",
-        image: "/assets/Gallery/blogs/Vastu Chart-Photoroom.png",
+        image: "../assets/Gallery/blogs/Vastu Chart-Photoroom.png",
     },
     {
       id: 3,
@@ -36,7 +36,7 @@ const blogPosts = [
       date: "April 15, 2025",
       author: "Michael Johnson",
       category: "Sustainability",
-      image: "/assets/Gallery/blogs/sustainable-home-tech.jpg",
+      image: "../assets/Gallery/blogs/sustainable-home-tech.jpg",
     },
      {
       id: 4,
@@ -46,7 +46,7 @@ const blogPosts = [
       date: "April 5, 2025",
       author: "Sarah Williams",
       category: "Planning",
-      image: "/assets/Gallery/blogs/architect.jpeg",
+      image: "../assets/Gallery/blogs/architect.jpeg",
     },
     {
       id: 5,
@@ -56,7 +56,7 @@ const blogPosts = [
       date: "March 22, 2025",
       author: "David Brown",
       category: "Interior Design",
-      image: "/assets/Gallery/proj1/4.jpg",
+      image: "../assets/Gallery/proj1/4.jpg",
     },
     {
       id: 6,
@@ -66,7 +66,7 @@ const blogPosts = [
       date: "March 10, 2025",
       author: "Emily Davis",
       category: "Construction",
-      image: "/assets/Gallery/proj8/18.jpg",
+      image: "../assets/Gallery/proj8/18.jpg",
     },
 ]
 
