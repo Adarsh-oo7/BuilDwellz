@@ -3,7 +3,7 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { ScrollReveal } from "@/components/scroll-reveal"
 import { Card, CardContent } from "@/components/ui/card"
-import { ArrowLeft, ChevronRight } from "lucide-react"
+import { ArrowLeft } from "lucide-react"
 import BlogDetailClient from './BlogDetailClient'
 
 import { blogPosts } from "@/lib/posts"
@@ -12,7 +12,7 @@ import { blogPosts } from "@/lib/posts"
 export async function generateStaticParams() {
   // Generate static params for all blog post IDs
   return blogPosts.map((post) => ({
-    id: post.id, // Keep as string since post.id is already a string
+    id: post.id.toString(), // Ensure id is a string
   }));
 }
 
@@ -23,7 +23,8 @@ interface BlogDetailPageProps {
 export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
     // Await the params in Next.js 15+
     const resolvedParams = await params
-    const currentPost = blogPosts.find((p) => p.id === resolvedParams.id)
+    // Convert string id to number for comparison since blogPosts likely has numeric ids
+    const currentPost = blogPosts.find((p) => p.id.toString() === resolvedParams.id)
 
     if (!currentPost) {
         return (
