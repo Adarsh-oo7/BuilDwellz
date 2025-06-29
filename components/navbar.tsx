@@ -128,25 +128,10 @@ export default function Navbar() {
               <Link href="/" className="flex items-center">
                 <Image
                   src="/logo.png"
-                  alt="BuilDwellz Logo"
+                  alt="Logo"
                   width={150}
                   height={150}
-                  className="h-auto w-auto max-h-16 object-contain"
-                  priority
-                  onError={(e) => {
-                    console.error('Logo failed to load');
-                    // Hide the broken image and show text fallback
-                    e.currentTarget.style.display = 'none';
-                    const fallback = e.currentTarget.nextElementSibling;
-                    if (fallback) fallback.style.display = 'block';
-                  }}
                 />
-                <span 
-                  className="text-2xl font-bold text-red-600 hidden"
-                  style={{ display: 'none' }}
-                >
-                  BuilDwellz
-                </span>
               </Link>
             </motion.div>
 
