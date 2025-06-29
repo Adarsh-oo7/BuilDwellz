@@ -7,17 +7,17 @@ export default function InitiativesPage() {
         {
             title: "Supporting Local Schools",
             description: "At BuilDwellz, we believe that building a better future starts with supporting the foundations of education. As part of our community initiatives, we regularly contribute essential items to local schools in and around Varkala.",
-            image: "/assets/Initiatives/IMG-20250627-WA0007.jpg",
+            image: "../assets/Initiatives/IMG-20250627-WA0007.jpg",
         },
         {
             title: "Celebrating Learning: School Year Fest Support",
             description: "At BuilDwellz, we don’t just build homes — we build joy, connection, and community. One of our proudest initiatives is supporting School Year Fest programs in local schools.",
-            image: "/assets/Initiatives/WhatsApp Image 2025-06-25 at 05.13.55_9a24f0eb.jpg",
+            image: "../assets/Initiatives/WhatsApp Image 2025-06-25 at 05.13.55_9a24f0eb.jpg",
         },
         {
             title: "Celebrating Together: Festivals with Our Clients",
             description: "One of our heartfelt initiatives is organizing festival celebrations such as Christmas, Onam, Vishu, and many more with our clients. These occasions allow us to go beyond business and connect on a personal level, culture, and traditions that make each festival unique.",
-            image: "/assets/Initiatives/IMG-20250627-WA0004.jpg",
+            image: "../assets/Initiatives/IMG-20250627-WA0004.jpg",
         },
     ]
 
