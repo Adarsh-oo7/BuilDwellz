@@ -20,8 +20,11 @@ export default function Navbar() {
   const getLogoPath = () => {
     if (pathname === "/") {
       return "./logo.png";
-    }
+    }else if(pathname === "/blog/" || pathname=="/about/" || pathname=='/services/' || pathname=='/projects/' || pathname=='/Initiatives/' || pathname=='/contact/' ){
     return "../logo.png";
+
+    }
+    return "../../logo.png"
   };
 
   useEffect(() => {
