@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { ScrollReveal } from "@/components/scroll-reveal"
 import { Card, CardContent } from "@/components/ui/card"
 import { ArrowLeft } from "lucide-react"
+import { useState } from "react"
 
 interface BlogPost {
     id: number;
@@ -23,10 +24,23 @@ interface BlogDetailClientProps {
     blogPosts: BlogPost[];
 }
 
+// Helper function to fix image paths for Next.js static export
+const getImagePath = (path: string) => {
+    // Remove the ../ prefix and ensure it starts with /
+    return path.replace(/^\.\.\//, '/');
+};
+
 export default function BlogDetailClient({ currentPost, blogPosts }: BlogDetailClientProps) {
+    const [imageErrors, setImageErrors] = useState<{[key: string]: boolean}>({});
+    
     const otherPosts = blogPosts.filter((p) => p.id !== currentPost.id)
     const sidebarPosts = otherPosts.slice(0, 3)
     const belowContentPosts = otherPosts.slice(3)
+
+    // Handle image load errors
+    const handleImageError = (imagePath: string) => {
+        setImageErrors(prev => ({ ...prev, [imagePath]: true }));
+    };
 
     return (
         <div className="pt-32 pb-20 bg-muted min-h-screen">
@@ -41,13 +55,27 @@ export default function BlogDetailClient({ currentPost, blogPosts }: BlogDetailC
                             <span>{currentPost.date}</span>
                         </div>
                         <h1 className="text-4xl font-bold mb-4">{currentPost.title}</h1>
-                        <Image
-                            src={currentPost.image}
-                            alt={currentPost.title}
-                            width={800}
-                            height={500}
-                            className="rounded-lg mb-8 object-cover w-full h-full"
-                        />
+                        
+                        {/* Main Post Image */}
+                        {!imageErrors[currentPost.image] ? (
+                            <Image
+                                src={getImagePath(currentPost.image)}
+                                alt={currentPost.title}
+                                width={800}
+                                height={500}
+                                className="rounded-lg mb-8 object-cover w-full h-full"
+                                onError={() => handleImageError(currentPost.image)}
+                            />
+                        ) : (
+                            <div className="w-full h-[500px] bg-gray-200 rounded-lg mb-8 flex items-center justify-center">
+                                <div className="text-center text-gray-500">
+                                    <div className="text-4xl mb-2">📝</div>
+                                    <p>Blog image not available</p>
+                                    <p className="text-sm mt-1">{currentPost.title}</p>
+                                </div>
+                            </div>
+                        )}
+                        
                         <p className="text-lg leading-relaxed text-gray-700 dark:text-gray-300 whitespace-pre-line">
                             {currentPost.content}
                         </p>
@@ -73,12 +101,22 @@ export default function BlogDetailClient({ currentPost, blogPosts }: BlogDetailC
                                     className={`overflow-hidden group transition-shadow duration-300 w-full p-2 hover:shadow-md`}
                                 >
                                     <div className="relative h-48 w-full rounded-md overflow-hidden">
-                                        <Image
-                                            src={post.image || "/placeholder.svg"}
-                                            alt={post.title}
-                                            fill
-                                            className="object-cover"
-                                        />
+                                        {!imageErrors[post.image] ? (
+                                            <Image
+                                                src={getImagePath(post.image) || getImagePath("/placeholder.svg")}
+                                                alt={post.title}
+                                                fill
+                                                className="object-cover"
+                                                onError={() => handleImageError(post.image)}
+                                            />
+                                        ) : (
+                                            <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+                                                <div className="text-center text-gray-500">
+                                                    <div className="text-2xl mb-1">📝</div>
+                                                    <p className="text-xs">Blog Image</p>
+                                                </div>
+                                            </div>
+                                        )}
                                     </div>
                                     <CardContent className="p-2">
                                         <Link
@@ -105,12 +143,22 @@ export default function BlogDetailClient({ currentPost, blogPosts }: BlogDetailC
                                 className="overflow-hidden group transition-shadow duration-300 p-2 hover:shadow-md"
                             >
                                 <div className="relative h-48 w-full rounded-md overflow-hidden">
-                                    <Image
-                                        src={post.image || "/placeholder.svg"}
-                                        alt={post.title}
-                                        fill
-                                        className="object-cover"
-                                    />
+                                    {!imageErrors[post.image] ? (
+                                        <Image
+                                            src={getImagePath(post.image) || getImagePath("/placeholder.svg")}
+                                            alt={post.title}
+                                            fill
+                                            className="object-cover"
+                                            onError={() => handleImageError(post.image)}
+                                        />
+                                    ) : (
+                                        <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+                                            <div className="text-center text-gray-500">
+                                                <div className="text-2xl mb-1">📝</div>
+                                                <p className="text-xs">Blog Image</p>
+                                            </div>
+                                        </div>
+                                    )}
                                 </div>
                                 <CardContent className="p-2">
                                     <Link
