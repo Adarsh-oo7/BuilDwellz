@@ -1,4 +1,3 @@
-```typescript
    export const blogPosts = [
      {
        id: "1",
@@ -61,4 +60,3 @@
        image: "../assets/Gallery/proj8/18.jpg",
      },
    ];
-   ```
