@@ -1,19 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
-
-// Define the project type (you might want to import this from a types file)
-interface Project {
-  id: number;
-  title: string;
-  category: string;
-  location: string;
-  year: string;
-  description: string;
-  image: string;
-  gallery?: string[];
-}
+import { Project } from "@/lib/projects";
 
 interface Props {
   project: Project;
@@ -49,14 +38,16 @@ export default function ProjectClient({ project }: Props) {
     if (e.key === "Escape") {
       closeGallery();
     } else if (e.key === "ArrowLeft") {
+      e.preventDefault();
       prevImage(e as any);
     } else if (e.key === "ArrowRight") {
+      e.preventDefault();
       nextImage(e as any);
     }
   };
 
   // Add keyboard event listener
-  React.useEffect(() => {
+  useEffect(() => {
     if (isOpen) {
       document.addEventListener("keydown", handleKeyDown);
       document.body.style.overflow = "hidden"; // Prevent background scrolling
@@ -68,7 +59,7 @@ export default function ProjectClient({ project }: Props) {
       document.removeEventListener("keydown", handleKeyDown);
       document.body.style.overflow = "unset";
     };
-  }, [isOpen, currentIndex]);
+  }, [isOpen, currentIndex, project.gallery]);
 
   return (
     <div className="py-20 container mx-auto px-4">
