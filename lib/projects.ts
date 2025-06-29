@@ -1,5 +1,3 @@
-// /lib/data/projects.ts
-
 export interface Project {
   id: number
   title: string
@@ -21,7 +19,7 @@ export const projects: Project[] = [
     description: "A sleek and stylish modern home located in the serene surroundings of Kollam Paravur. This residential masterpiece blends minimalist design with functional elegance, offering spacious, open-plan living areas that seamlessly connect with nature. Clean lines, expansive windows, and an abundance of natural light create a refreshing atmosphere throughout the home. Featuring state-of-the-art materials and sustainable features, this modern house provides the perfect balance of comfort and sophistication. It's a contemporary sanctuary where every detail is crafted for luxury living and relaxation.",
     image: "../assets/Gallery/proj1/p1.jpg",
     gallery: [
-      "./assets/Gallery/proj1/1.jpg",
+      "../assets/Gallery/proj1/1.jpg",
       "../assets/Gallery/proj1/2.jpg",
       "../assets/Gallery/proj1/3.jpg",
       "../assets/Gallery/proj1/4.jpg",

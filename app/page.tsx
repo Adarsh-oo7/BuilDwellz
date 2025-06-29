@@ -122,14 +122,14 @@ useEffect(() => {
       location: "Varkala",
       rating: 5,
       text: "Choosing BuildWellz was the best decision we made for our home project. Our home turned out better than we imagined.",
-      image: "./testimonial1.jpg",
+      image: "../testimonial1.jpg",
     },
      {
       name: "Sudheesh",
       location: "Varkala",
       rating: 5,
       text: "From planning to execution, BuildWellz handled everything seamlessly. Their dedication to quality and design made the process stress-free and enjoyable.",
-      image: "./p2.jpg",
+      image: "../p2.jpg",
     },
   ];
 
