@@ -229,8 +229,20 @@ export default function Navbar() {
         aria-label="Mobile navigation"
         onClick={(e) => e.stopPropagation()}
       >
+
+
+    
+
+
         <div className="flex flex-col h-full bg-white dark:bg-black shadow-2xl">
-          <div className="flex-1 overflow-y-auto pt-24 px-6 pb-6 space-y-2">
+          <div className="flex-1 overflow-y-auto pt-5 px-6 pb-6  space-y-2">
+                 <Image
+                 className="pb-5"
+                  src={getLogoPath()}
+                  alt="Logo"
+                  width={150}
+                  height={150}
+                />
             {navItems.map((item, index) => (
               <motion.div
                 key={item.path}
