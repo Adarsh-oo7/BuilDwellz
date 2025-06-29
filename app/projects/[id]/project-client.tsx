@@ -8,7 +8,7 @@ interface Props {
   project: Project;
 }
 
-// Helper function to fix image paths for Next.js
+// Helper function to fix image paths for Next.js static export
 const getImagePath = (path: string) => {
   // Remove the ../ prefix and ensure it starts with /
   return path.replace(/^\.\.\//, '/');

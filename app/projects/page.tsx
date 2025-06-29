@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, useMemo } from "react"
+import { useState, useEffect } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import dynamic from "next/dynamic"
@@ -43,19 +43,6 @@ const itemVariants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
 }
 
-// Error fallback component
-function ErrorFallback({ error, resetErrorBoundary }: { error: Error; resetErrorBoundary: () => void }) {
-  return (
-    <div className="text-center p-12 bg-muted rounded-lg">
-      <h3 className="text-lg font-medium mb-2">Something went wrong with the 3D visualizer</h3>
-      <p className="text-muted-foreground mb-4">Error: {error.message}</p>
-      <Button onClick={resetErrorBoundary} variant="outline">
-        Try Again
-      </Button>
-    </div>
-  )
-}
-
 export default function Projects() {
   const [activeTab, setActiveTab] = useState("all")
   const [isClient, setIsClient] = useState(false)
@@ -65,18 +52,10 @@ export default function Projects() {
     setIsClient(true)
   }, [])
 
-  // Get unique categories from projects for dynamic tab generation
-  const categories = useMemo(() => {
-    const uniqueCategories = Array.from(new Set(projects.map(project => project.category)))
-    return uniqueCategories.sort()
-  }, [])
-
-  // Apply filter based on active tab - memoized for performance
-  const filteredProjects = useMemo(() => {
-    return activeTab === "all" 
-      ? projects 
-      : projects.filter((project) => project.category === activeTab)
-  }, [activeTab])
+  // Apply filter based on active tab
+  const filteredProjects = activeTab === "all" 
+    ? projects 
+    : projects.filter((project) => project.category === activeTab)
 
   return (
     <>
@@ -105,8 +84,11 @@ export default function Projects() {
                 </p>
               </div>
               <ErrorBoundary
-                FallbackComponent={ErrorFallback}
-                onReset={() => window.location.reload()}
+                fallback={
+                  <div className="text-center p-12 bg-muted rounded-lg">
+                    <p className="text-lg font-medium">Failed to load 3D visualizer. Please refresh the page.</p>
+                  </div>
+                }
               >
                 <RoomVisualizer />
               </ErrorBoundary>
@@ -122,44 +104,33 @@ export default function Projects() {
             <div className="flex justify-center mb-12">
               <TabsList className="bg-background/80 backdrop-blur-sm">
                 <TabsTrigger value="all">All Projects</TabsTrigger>
-                {categories.map((category) => (
-                  <TabsTrigger 
-                    key={category} 
-                    value={category}
-                    className="capitalize"
-                  >
-                    {category}
-                  </TabsTrigger>
-                ))}
+                <TabsTrigger value="residential">Residential</TabsTrigger>
+                <TabsTrigger value="commercial">Commercial</TabsTrigger>
               </TabsList>
             </div>
 
             <TabsContent value={activeTab} className="mt-0">
-              {filteredProjects.length > 0 ? (
-                <motion.div
-                  key={activeTab}
-                  variants={containerVariants}
-                  initial="hidden"
-                  animate="visible"
-                  className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-                >
-                  {filteredProjects.map((project) => (
-                    <motion.div key={project.id} variants={itemVariants}>
-                      <ProjectCard project={project} />
-                    </motion.div>
-                  ))}
-                </motion.div>
-              ) : (
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="text-center py-16"
-                >
-                  <p className="text-lg text-muted-foreground">No projects found in this category.</p>
-                </motion.div>
-              )}
+              <motion.div
+                key={activeTab}
+                variants={containerVariants}
+                initial="hidden"
+                animate="visible"
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+              >
+                {filteredProjects.map((project) => (
+                  <motion.div key={project.id} variants={itemVariants}>
+                    <ProjectCard project={project} />
+                  </motion.div>
+                ))}
+              </motion.div>
             </TabsContent>
           </Tabs>
+          
+          {filteredProjects.length === 0 && (
+            <div className="text-center py-16">
+              <p className="text-lg text-muted-foreground">No projects found in this category.</p>
+            </div>
+          )}
         </div>
       </section>
 
@@ -183,26 +154,22 @@ export default function Projects() {
   )
 }
 
-// Project card component with proper type definition and improved accessibility
+// Project card component with proper type definition
 function ProjectCard({ project }: { project: Project }) {
-  const [imageError, setImageError] = useState(false)
-
   return (
     <div className="group relative overflow-hidden rounded-lg h-80 card-3d">
       <div className="image-zoom-container h-full">
         <Image 
-          src={imageError ? "/placeholder.svg" : (project.image || "/placeholder.svg")} 
-          alt={`${project.title} - ${project.category} project in ${project.location}`} 
+          src={project.image || "/placeholder.svg"} 
+          alt={project.title} 
           fill 
           className="object-cover image-zoom"
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          onError={() => setImageError(true)}
-          priority={false}
         />
       </div>
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6 card-3d-content">
         <div className="mb-2">
-          <span className="inline-block px-3 py-1 text-xs font-semibold bg-secondary text-secondary-foreground rounded-full mb-2 mr-2 capitalize">
+          <span className="inline-block px-3 py-1 text-xs font-semibold bg-secondary text-secondary-foreground rounded-full mb-2 mr-2">
             {project.category}
           </span>
           <span className="inline-block px-3 py-1 text-xs font-semibold bg-white/20 text-white rounded-full">
@@ -217,9 +184,7 @@ function ProjectCard({ project }: { project: Project }) {
           variant="outline"
           className="w-full bg-white/10 text-white border-white/20 backdrop-blur-sm hover:bg-white/20"
         >
-          <Link href={`/projects/${project.id}`} aria-label={`View details for ${project.title}`}>
-            View Project
-          </Link>
+          <Link href={`/projects/${project.id}`}>View Project</Link>
         </Button>
       </div>
     </div>
