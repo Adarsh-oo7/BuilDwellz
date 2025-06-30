@@ -18,17 +18,33 @@ export default function Navbar() {
   const pathname = usePathname();
   const isMobile = useMobile();
   const { resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+  const [logoPath, setLogoPath] = useState("./logo.png"); // default fallback
   
   // Get the correct logo path based on current route
+
+
+
+useEffect(() => {
+  setMounted(true);
+
   const getLogoPath = () => {
     if (pathname === "/") {
-      return  resolvedTheme === "dark" ? "./whitelogo.png" : "./logo.png";
-    }else if(pathname === "/blog/" || pathname=="/about/" || pathname=='/services/' || pathname=='/projects/' || pathname=='/Initiatives/' || pathname=='/contact/' ){
-    return resolvedTheme === "dark" ? "../whitelogo.png" : "../logo.png";
-
+      return resolvedTheme === "dark" ? "./whitelogo.png" : "./logo.png";
+    } else if ( pathname === "/blog/" || pathname === "/about/" || pathname === "/services/" || pathname === "/projects/" || pathname === "/Initiatives/" || pathname === "/contact/" ) {
+      return resolvedTheme === "dark" ? "../whitelogo.png" : "../logo.png";
     }
     return resolvedTheme === "dark" ? "../../whitelogo.png" : "../../logo.png";
   };
+
+  if (resolvedTheme) {
+    setLogoPath(getLogoPath());
+  }
+}, [resolvedTheme, pathname]);
+
+
+
+
 
   useEffect(() => {
     const handleScroll = () => {
@@ -141,7 +157,7 @@ export default function Navbar() {
             >
               <Link href="/" className="flex items-center">
                 <Image
-                  src={getLogoPath()}
+                  src={logoPath}
                   alt="Logo"
                   width={150}
                   height={150}
@@ -244,7 +260,7 @@ export default function Navbar() {
           <div className="flex-1 overflow-y-auto pt-5 px-6 pb-6  space-y-2">
                  <Image
                  className="pb-5"
-                  src={getLogoPath()}
+                  src={logoPath}
                   alt="Logo"
                   width={150}
                   height={150}
