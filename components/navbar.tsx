@@ -9,19 +9,23 @@ import { Button } from "@/components/ui/button";
 import { ModeToggle } from "@/components/mode-toggle";
 import { useMobile } from "@/hooks/use-mobile";
 import Image from "next/image";
+import { useTheme } from "next-themes";
+
+
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
   const isMobile = useMobile();
-  
+  const { resolvedTheme } = useTheme();
+
   // Get the correct logo path based on current route
   const getLogoPath = () => {
     if (pathname === "/") {
-      return "./logo.png";
+      return resolvedTheme === "dark" ? "./whitelogo.png" : "./logo.png";
     }
-    return "../logo.png";
+    return resolvedTheme === "dark" ? "../whitelogo.png" : "../logo.png";
   };
 
   useEffect(() => {
