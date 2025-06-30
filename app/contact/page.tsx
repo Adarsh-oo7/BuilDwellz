@@ -1,7 +1,5 @@
 "use client"
 
-import type React from "react"
-
 import { useState } from "react"
 import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
@@ -32,21 +30,45 @@ export default function ContactPage() {
     e.preventDefault()
     setIsSubmitting(true)
 
-    // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 1500))
+    const form = new FormData()
+    form.append("name", formData.name)
+    form.append("email", formData.email)
+    form.append("phone", formData.phone)
+    form.append("subject", formData.subject)
+    form.append("message", formData.message)
+    form.append("formGoogleSheetName", "buildwellz")
+    form.append("formDataNameOrder", JSON.stringify(["name", "email", "phone", "subject", "message"]))
+    form.append("formGoogleSendEmail", "aromalvijayan448@gmail.com")
 
-    toast({
-      title: "Message Sent!",
-      description: "We'll get back to you as soon as possible.",
-    })
+    try {
+      const response = await fetch("https://script.google.com/macros/s/AKfycbyZvIDBkriO-8G6SYfrzsUah-FXk5aOCN-lVElNKyqRWoYDLrUGARcyawUV4YNkYe-M4Q/exec", {
+        method: "POST",
+       body: new FormData(e.target),
+      })
 
-    setFormData({
-      name: "",
-      email: "",
-      phone: "",
-      subject: "",
-      message: "",
-    })
+      if (response.ok) {
+        toast({
+          title: "Message Sent!",
+          description: "We’ll get back to you as soon as possible.",
+        })
+
+        setFormData({
+          name: "",
+          email: "",
+          phone: "",
+          subject: "",
+          message: "",
+        })
+      } else {
+        throw new Error("Form submission failed")
+      }
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Something went wrong. Please try again later.",
+      })
+    }
+
     setIsSubmitting(false)
   }
 
@@ -118,7 +140,7 @@ export default function ContactPage() {
                     <Mail className="h-8 w-8" />
                   </div>
                   <h3 className="text-xl font-bold mb-2">Email Address</h3>
-                  <p className="text-muted-foreground">BUILDWELLZVARKALA@GMAIL.COM</p>
+                  <p className="text-muted-foreground">buildwellzvarkala@gmail.community</p>
                 </CardContent>
               </Card>
             </motion.div>
@@ -127,7 +149,7 @@ export default function ContactPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             <ScrollReveal direction="left">
               <h2 className="text-3xl font-bold mb-6">Send Us a Message</h2>
-              <form className="space-y-6" onSubmit={handleSubmit}>
+              <form id="submit-form" className="space-y-6" onSubmit={handleSubmit}>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <label htmlFor="name" className="block text-sm font-medium mb-2">
@@ -138,7 +160,7 @@ export default function ContactPage() {
                       name="name"
                       value={formData.name}
                       onChange={handleChange}
-                      placeholder="John Doe"
+                      placeholder="Enter your name"
                       required
                     />
                   </div>
@@ -152,7 +174,7 @@ export default function ContactPage() {
                       type="email"
                       value={formData.email}
                       onChange={handleChange}
-                      placeholder="john@example.com"
+                      placeholder="Enter your mail"
                       required
                     />
                   </div>
@@ -196,6 +218,8 @@ export default function ContactPage() {
                     required
                   />
                 </div>
+<input type="hidden" name="Aromal" value="Sheet1" />
+
                 <Button
                   type="submit"
                   className="bg-primary hover:bg-primary/90 w-full md:w-auto"
@@ -223,7 +247,8 @@ export default function ContactPage() {
                   allowFullScreen
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
-                ></iframe>              </div>
+                ></iframe>
+              </div>
               <Card className="bg-muted hover:shadow-lg transition-shadow duration-300">
                 <CardContent className="p-6">
                   <h3 className="text-xl font-bold mb-4">Office Hours</h3>

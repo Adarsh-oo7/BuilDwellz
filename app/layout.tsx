@@ -5,6 +5,8 @@ import "./globals.css";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
 import ClientLayout from "./ClinetLayout"; // New client-side wrapper
+import Script from "next/script";
+
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-playfair" });
@@ -40,6 +42,7 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({
+  
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -47,6 +50,8 @@ export default function RootLayout({
   return (
     <html lang="en" role="document">
       <body className={`${inter.variable} ${playfair.variable} font-sans`}>
+        {/* <Script src="/assets/js/custom.js"></Script> */}
+
         <ClientLayout>
           <Navbar />
           <main id="main-content">{children}</main>
