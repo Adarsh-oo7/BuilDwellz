@@ -275,6 +275,7 @@ export default function Navbar() {
             >
               <Link href="/contact" onClick={() => setIsOpen(false)}>
                 Get a Quote
+                
               </Link>
             </Button>
           </div>
