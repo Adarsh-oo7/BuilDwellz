@@ -25,44 +25,28 @@ interface BlogDetailClientProps {
 }
 
 // Improved helper function to fix image paths for different deployment scenarios
+// Helper function to fix image paths for Next.js static export on GitHub Pages
 const getImagePath = (path: string) => {
-  if (!path) return '/placeholder.svg';
+  // Remove the ../ prefix and ensure it starts with /
+  let cleanPath = path.replace(/^\.\.\//, '/');
   
-  // If path is already absolute or starts with http, return as is
-  if (path.startsWith('http') || path.startsWith('/')) {
-    return path;
-  }
-  
-  // Remove any ../ prefix and ensure it starts with /
-  let cleanPath = path.replace(/^\.\.\/+/, '').replace(/^\/+/, '');
-  cleanPath = '/' + cleanPath;
-  
-  // For production deployment, check if we need to add base path
+  // For GitHub Pages, detect if we're on a repository page (not a custom domain)
+  // This checks if the current URL contains github.io and adds the repo name as base path
   if (typeof window !== 'undefined' && process.env.NODE_ENV === 'production') {
     const currentUrl = window.location.href;
-    
-    // Check for GitHub Pages deployment
     if (currentUrl.includes('.github.io/')) {
+      // Extract repository name from URL
       const urlParts = currentUrl.split('.github.io/');
       if (urlParts.length > 1) {
-        const pathParts = urlParts[1].split('/');
-        if (pathParts[0] && pathParts[0] !== '') {
-          const repoName = pathParts[0];
-          return `/${repoName}${cleanPath}`;
-        }
+        const repoName = urlParts[1].split('/')[0];
+        return `/${repoName}${cleanPath}`;
       }
-    }
-    
-    // Check for other subdirectory deployments
-    const pathname = window.location.pathname;
-    const pathSegments = pathname.split('/').filter(Boolean);
-    if (pathSegments.length > 0 && !cleanPath.startsWith(`/${pathSegments[0]}`)) {
-      return `/${pathSegments[0]}${cleanPath}`;
     }
   }
   
   return cleanPath;
 };
+
 
 export default function BlogDetailClient({ currentPost, blogPosts }: BlogDetailClientProps) {
     const [imageErrors, setImageErrors] = useState<{[key: string]: boolean}>({});
