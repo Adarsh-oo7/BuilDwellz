@@ -6,6 +6,7 @@ import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
 import ClientLayout from "./ClinetLayout"; // New client-side wrapper
 import Script from "next/script";
+import WhatsAppButton from "@/components/WhatsAppButton";
 
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
@@ -55,6 +56,7 @@ export default function RootLayout({
         <ClientLayout>
           <Navbar />
           <main id="main-content">{children}</main>
+          <WhatsAppButton/>
           <Footer />
         </ClientLayout>
       </body>
