@@ -11,6 +11,7 @@ import { ScrollReveal } from "@/components/scroll-reveal"
 import { MagneticButton } from "@/components/magnetic-button"
 import { ErrorBoundary } from "react-error-boundary"
 import { projects, Project } from "@/lib/projects"
+import { UpcomingProject, upcomingProjects } from "@/lib/upcoming-projects"
 
 // Dynamically import RoomVisualizer with no SSR
 const RoomVisualizer = dynamic(
@@ -96,6 +97,46 @@ export default function Projects() {
           </div>
         </section>
       )}
+
+
+{/* Upcoming Projects Section */}
+{/* Upcoming Projects Section */}
+<section className="py-20 bg-background">
+  <div className="container mx-auto px-4">
+    <ScrollReveal>
+      <div className="text-center mb-12">
+        <h2 className="text-3xl font-bold mb-4">Upcoming Projects</h2>
+        <p className="text-muted-foreground max-w-3xl mx-auto">
+          Take a sneak peek at some of the exciting projects we have in the pipeline.
+        </p>
+      </div>
+
+      {upcomingProjects.length > 0 ? (
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+        >
+          {upcomingProjects.map((project) => (
+            <motion.div key={project.id} variants={itemVariants}>
+              <ProjectCard project={project} />
+            </motion.div>
+          ))}
+        </motion.div>
+      ) : (
+        <div className="text-center py-12">
+          <p className="text-muted-foreground">No upcoming projects at the moment. Stay tuned!</p>
+        </div>
+      )}
+    </ScrollReveal>
+  </div>
+</section>
+
+
+
+      
 
       {/* Projects Gallery */}
       <section className="py-20">

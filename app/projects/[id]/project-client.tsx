@@ -6,19 +6,15 @@ import { Project } from "@/lib/projects";
 
 interface Props {
   project: Project;
+  isUpcoming?: boolean;
 }
 
-// Helper function to fix image paths for Next.js static export on GitHub Pages
+// Helper function for static exports (e.g., GitHub Pages)
 const getImagePath = (path: string) => {
-  // Remove the ../ prefix and ensure it starts with /
   let cleanPath = path.replace(/^\.\.\//, '/');
-  
-  // For GitHub Pages, detect if we're on a repository page (not a custom domain)
-  // This checks if the current URL contains github.io and adds the repo name as base path
   if (typeof window !== 'undefined' && process.env.NODE_ENV === 'production') {
     const currentUrl = window.location.href;
     if (currentUrl.includes('.github.io/')) {
-      // Extract repository name from URL
       const urlParts = currentUrl.split('.github.io/');
       if (urlParts.length > 1) {
         const repoName = urlParts[1].split('/')[0];
@@ -26,23 +22,20 @@ const getImagePath = (path: string) => {
       }
     }
   }
-  
   return cleanPath;
 };
 
-export default function ProjectClient({ project }: Props) {
+export default function ProjectClient({ project, isUpcoming }: Props) {
   const [isOpen, setIsOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [imageErrors, setImageErrors] = useState<{[key: string]: boolean}>({});
+  const [imageErrors, setImageErrors] = useState<{ [key: string]: boolean }>({});
 
   const openGallery = (index: number) => {
     setCurrentIndex(index);
     setIsOpen(true);
   };
 
-  const closeGallery = () => {
-    setIsOpen(false);
-  };
+  const closeGallery = () => setIsOpen(false);
 
   const prevImage = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -54,22 +47,13 @@ export default function ProjectClient({ project }: Props) {
     setCurrentIndex((prev) => (prev === project.gallery!.length - 1 ? 0 : prev + 1));
   };
 
-  // Handle keyboard navigation
   const handleKeyDown = (e: KeyboardEvent) => {
     if (!isOpen) return;
-    
-    if (e.key === "Escape") {
-      closeGallery();
-    } else if (e.key === "ArrowLeft") {
-      e.preventDefault();
-      prevImage(e as any);
-    } else if (e.key === "ArrowRight") {
-      e.preventDefault();
-      nextImage(e as any);
-    }
+    if (e.key === "Escape") closeGallery();
+    if (e.key === "ArrowLeft") prevImage(e as any);
+    if (e.key === "ArrowRight") nextImage(e as any);
   };
 
-  // Add keyboard event listener
   useEffect(() => {
     if (isOpen) {
       document.addEventListener("keydown", handleKeyDown);
@@ -82,19 +66,25 @@ export default function ProjectClient({ project }: Props) {
       document.removeEventListener("keydown", handleKeyDown);
       document.body.style.overflow = "unset";
     };
-  }, [isOpen, currentIndex, project.gallery]);
+  }, [isOpen, currentIndex]);
 
-  // Handle image load errors
-  const handleImageError = (imagePath: string) => {
-    setImageErrors(prev => ({ ...prev, [imagePath]: true }));
+  const handleImageError = (path: string) => {
+    setImageErrors((prev) => ({ ...prev, [path]: true }));
   };
 
   return (
     <div className="py-20 container mx-auto px-4">
       <h1 className="text-4xl font-bold mb-2">{project.title}</h1>
-      <p className="text-muted-foreground text-lg mb-6">
+      <p className="text-muted-foreground text-lg mb-2">
         {project.category.toUpperCase()} • {project.location} • {project.year}
       </p>
+
+      {isUpcoming && (
+        <div className="inline-block px-4 py-2 mb-6 bg-yellow-100 text-yellow-800 rounded-full text-sm font-medium">
+          🚧 This project is coming soon
+        </div>
+      )}
+
       <p className="mb-8 max-w-3xl text-lg leading-relaxed">{project.description}</p>
 
       <div className="mb-8">
@@ -120,14 +110,14 @@ export default function ProjectClient({ project }: Props) {
       </div>
 
       {/* Gallery Section */}
-      {project.gallery && project.gallery.length > 0 && (
+      {project.gallery?.length > 0 && (
         <div className="mt-12">
           <h2 className="text-2xl font-semibold mb-6">Project Gallery</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {project.gallery.map((img, i) => (
               <div
                 key={i}
-                className="cursor-pointer group relative overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-all duration-300"
+                className="cursor-pointer group relative overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-all"
                 onClick={() => openGallery(i)}
               >
                 {!imageErrors[img] ? (
@@ -147,10 +137,8 @@ export default function ProjectClient({ project }: Props) {
                     </div>
                   </div>
                 )}
-                <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center">
-                  <div className="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <span className="text-sm font-medium">Click to view</span>
-                  </div>
+                <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all flex items-center justify-center">
+                  <span className="text-white opacity-0 group-hover:opacity-100 text-sm font-medium">Click to view</span>
                 </div>
               </div>
             ))}
@@ -158,7 +146,7 @@ export default function ProjectClient({ project }: Props) {
         </div>
       )}
 
-      {/* Popup Overlay */}
+      {/* Lightbox Gallery */}
       {isOpen && project.gallery && (
         <div
           className="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50 p-4"
@@ -170,13 +158,13 @@ export default function ProjectClient({ project }: Props) {
               e.stopPropagation();
               closeGallery();
             }}
-            className="absolute top-4 right-4 text-white text-3xl font-bold hover:text-red-400 transition-colors duration-200 z-10"
+            className="absolute top-4 right-4 text-white text-3xl font-bold hover:text-red-400 z-10"
             aria-label="Close gallery"
           >
             ×
           </button>
 
-          {/* Image counter */}
+          {/* Image index */}
           <div className="absolute top-4 left-4 text-white text-lg font-medium z-10">
             {currentIndex + 1} / {project.gallery.length}
           </div>
@@ -185,14 +173,14 @@ export default function ProjectClient({ project }: Props) {
           {project.gallery.length > 1 && (
             <button
               onClick={prevImage}
-              className="absolute left-4 text-white text-4xl font-bold hover:text-gray-300 transition-colors duration-200 z-10"
+              className="absolute left-4 text-white text-4xl font-bold hover:text-gray-300 z-10"
               aria-label="Previous image"
             >
               ‹
             </button>
           )}
 
-          {/* Main image */}
+          {/* Current image */}
           <div className="relative max-w-4xl max-h-full">
             {!imageErrors[project.gallery[currentIndex]] ? (
               <Image
@@ -200,7 +188,7 @@ export default function ProjectClient({ project }: Props) {
                 alt={`${project.title} gallery image ${currentIndex + 1}`}
                 width={1200}
                 height={800}
-                className="rounded-lg shadow-2xl max-w-full max-h-[80vh] w-auto h-auto object-contain"
+                className="rounded-lg shadow-2xl max-w-full max-h-[80vh] object-contain"
                 onClick={(e) => e.stopPropagation()}
                 onError={() => handleImageError(project.gallery![currentIndex])}
               />
@@ -219,7 +207,7 @@ export default function ProjectClient({ project }: Props) {
           {project.gallery.length > 1 && (
             <button
               onClick={nextImage}
-              className="absolute right-4 text-white text-4xl font-bold hover:text-gray-300 transition-colors duration-200 z-10"
+              className="absolute right-4 text-white text-4xl font-bold hover:text-gray-300 z-10"
               aria-label="Next image"
             >
               ›
@@ -228,7 +216,7 @@ export default function ProjectClient({ project }: Props) {
 
           {/* Thumbnail strip */}
           {project.gallery.length > 1 && (
-            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2 max-w-full overflow-x-auto px-4">
+            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2 overflow-x-auto px-4">
               {project.gallery.map((img, i) => (
                 <button
                   key={i}
@@ -236,7 +224,7 @@ export default function ProjectClient({ project }: Props) {
                     e.stopPropagation();
                     setCurrentIndex(i);
                   }}
-                  className={`flex-shrink-0 w-16 h-12 rounded overflow-hidden border-2 transition-all duration-200 ${
+                  className={`flex-shrink-0 w-16 h-12 rounded border-2 ${
                     i === currentIndex ? "border-white" : "border-transparent opacity-60 hover:opacity-80"
                   }`}
                 >

@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import { projects } from "@/lib/projects";
+import { upcomingProjects } from "@/lib/upcoming-projects";
 import ProjectClient from "./project-client";
 import type { Metadata } from "next";
 
@@ -7,28 +8,21 @@ interface Props {
   params: Promise<{ id: string }>;
 }
 
-// Static generation function
+// Static generation for all project IDs (current + upcoming)
 export async function generateStaticParams() {
-  return projects.map((project) => ({
+  const all = [...projects, ...upcomingProjects];
+  return all.map((project) => ({
     id: project.id.toString(),
   }));
 }
 
-// Generate metadata for SEO
+// Dynamic SEO metadata
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
-  
-  // Validate that id is a valid number
-  const projectId = parseInt(id);
-  if (isNaN(projectId)) {
-    return {
-      title: "Project Not Found",
-      description: "The requested project could not be found.",
-    };
-  }
 
-  const project = projects.find((p) => p.id === projectId);
-  
+  const allProjects = [...projects, ...upcomingProjects];
+  const project = allProjects.find((p) => p.id.toString() === id);
+
   if (!project) {
     return {
       title: "Project Not Found",
@@ -49,7 +43,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
           width: 1200,
           height: 600,
           alt: project.title,
-        }
+        },
       ],
       type: "article",
     },
@@ -62,21 +56,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
+// Page component
 export default async function ProjectDetailsPage({ params }: Props) {
   const { id } = await params;
-  
-  // Validate that id is a valid number
-  const projectId = parseInt(id);
-  if (isNaN(projectId)) {
-    return notFound();
-  }
 
-  const project = projects.find((p) => p.id === projectId);
+  const allProjects = [...projects, ...upcomingProjects];
+  const project = allProjects.find((p) => p.id.toString() === id);
 
-  if (!project) {
-    return notFound();
-  }
+  if (!project) return notFound();
 
-  // Pass the project data to the client component
-  return <ProjectClient project={project} />;
+  const isUpcoming = upcomingProjects.some((p) => p.id.toString() === id);
+
+  return <ProjectClient project={project} isUpcoming={isUpcoming} />;
 }
