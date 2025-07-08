@@ -43,7 +43,7 @@ export default function ContactPage() {
     try {
       const response = await fetch("https://script.google.com/macros/s/AKfycbyZvIDBkriO-8G6SYfrzsUah-FXk5aOCN-lVElNKyqRWoYDLrUGARcyawUV4YNkYe-M4Q/exec", {
         method: "POST",
-       body: new FormData(e.target),
+        body: new FormData(e.target),
       })
 
       if (response.ok) {
@@ -218,7 +218,7 @@ export default function ContactPage() {
                     required
                   />
                 </div>
-<input type="hidden" name="Aromal" value="Sheet1" />
+                <input type="hidden"  />
 
                 <Button
                   type="submit"
