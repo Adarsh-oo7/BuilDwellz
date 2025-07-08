@@ -5,8 +5,9 @@ import ProjectClient from "./project-client";
 import type { Metadata } from "next";
 
 interface Props {
-  params: Promise<{ id: string }>;
+  params: { id: string };
 }
+
 
 // Static generation for all project IDs (current + upcoming)
 export async function generateStaticParams() {
@@ -18,7 +19,7 @@ export async function generateStaticParams() {
 
 // Dynamic SEO metadata
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { id } = await params;
+  const { id } = params;
 
   const allProjects = [...projects, ...upcomingProjects];
   const project = allProjects.find((p) => p.id.toString() === id);
@@ -58,7 +59,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 // Page component
 export default async function ProjectDetailsPage({ params }: Props) {
-  const { id } = await params;
+  const { id } = params;
 
   const allProjects = [...projects, ...upcomingProjects];
   const project = allProjects.find((p) => p.id.toString() === id);
