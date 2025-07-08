@@ -16,16 +16,16 @@ export const upcomingProjects = [
     location: "Varkala, Kerala",
     year: "2025",
     description: "A modern luxury villa with sea-facing views and smart home features.",
-    image: "../assets/Gallery/upcoming/APPARTMENT_Photo - 1.jpg",
+    image: "../assets/Gallery/upcoming/APPARTMENT_Photo - 1.webp",
     gallery: [
-      "../assets/Gallery/upcoming/APPARTMENT_Photo - 1.jpg",
-      "../assets/Gallery/upcoming/APPARTMENT_Photo - 2.jpg",
-      "../assets/Gallery/upcoming/APPARTMENT_Photo - 3.jpg",
-      "../assets/Gallery/upcoming/APPARTMENT_Photo - 4.jpg",
-      "../assets/Gallery/upcoming/APPARTMENT_Photo - 5.jpg",
-      "../assets/Gallery/upcoming/APPARTMENT_Photo - 6.jpg",
-      "../assets/Gallery/upcoming/APPARTMENT_Photo - 7.jpg",
-      "../assets/Gallery/upcoming/APPARTMENT_Photo - 8.jpg",
+      "../assets/Gallery/upcoming/APPARTMENT_Photo - 1.webp",
+      "../assets/Gallery/upcoming/APPARTMENT_Photo - 2.webp",
+      "../assets/Gallery/upcoming/APPARTMENT_Photo - 3.webp",
+      "../assets/Gallery/upcoming/APPARTMENT_Photo - 4.webp",
+      "../assets/Gallery/upcoming/APPARTMENT_Photo - 5.webp",
+      "../assets/Gallery/upcoming/APPARTMENT_Photo - 6.webp",
+      "../assets/Gallery/upcoming/APPARTMENT_Photo - 7.webp",
+      "../assets/Gallery/upcoming/APPARTMENT_Photo - 8.webp",
 
     ]
   },
@@ -36,10 +36,10 @@ export const upcomingProjects = [
     location: "Varkala, Kerala",
     year: "2025",
     description: "A futuristic Commercial space and Luxury home with green terraces and sky lounges.",
-    image: "../assets/Gallery/upcoming/kallambalam2.jpg",
+    image: "../assets/Gallery/upcoming/kallambalam2.webp",
     gallery: [
-      "../assets/Gallery/upcoming/kallambalam2.jpg",
-      "../assets/Gallery/upcoming/kallambalam1.jpg",
+      "../assets/Gallery/upcoming/kallambalam2.webp",
+      "../assets/Gallery/upcoming/kallambalam1.webp",
     ]
   }
 ];
