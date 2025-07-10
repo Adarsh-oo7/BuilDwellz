@@ -4,6 +4,14 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { AnimationProvider } from "@/components/animation-provider";
 import { Toaster } from "@/components/ui/toaster";
 import ErrorBoundary from "@/components/error-boundary";
+import type { Metadata } from "next";
+
+
+
+export const metadata: Metadata = {
+  title: "Our Services - BuilDwellz",
+  description: "Discover the architectural, interior, and construction services offered by BuilDwellz.",
+};
 
 interface ClientLayoutProps {
   children: React.ReactNode;

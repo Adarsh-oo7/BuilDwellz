@@ -2,6 +2,14 @@ import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Home, Ruler, Compass, FileText, PenTool, Building, FileCheck, Paintbrush } from "lucide-react"
+import type { Metadata } from "next";
+
+
+
+export const metadata: Metadata = {
+  title: "Our Services - BuilDwellz",
+  description: "Discover the architectural, interior, and construction services offered by BuilDwellz.",
+};
 
 export default function ServicesPage() {
   const services = [
@@ -91,9 +99,8 @@ export default function ServicesPage() {
               <div
                 key={service.id}
                 id={service.id}
-                className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center ${
-                  index % 2 === 1 ? "lg:flex-row-reverse" : ""
-                }`}
+                className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center ${index % 2 === 1 ? "lg:flex-row-reverse" : ""
+                  }`}
               >
                 <div className={index % 2 === 1 ? "lg:order-2" : ""}>
                   <div className="flex items-center mb-6">

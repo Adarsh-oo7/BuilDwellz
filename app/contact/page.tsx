@@ -9,6 +9,14 @@ import { Textarea } from "@/components/ui/textarea"
 import { ScrollReveal } from "@/components/scroll-reveal"
 import { useToast } from "@/hooks/use-toast"
 import { MapPin, Phone, Mail, Clock, Send, Loader2 } from "lucide-react"
+import type { Metadata } from "next";
+
+
+
+export const metadata: Metadata = {
+  title: "Contact Us - BuilDwellz Constructions",
+  description: "Learn about BuilDwellz, our vision, and our commitment to premium design and construction in Varkala.",
+};
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
