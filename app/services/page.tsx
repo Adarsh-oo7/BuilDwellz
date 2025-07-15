@@ -19,7 +19,7 @@ export default function ServicesPage() {
       title: "Building Plan",
       description:
         "Our expert architects create detailed building plans tailored to your specific needs and preferences. We consider spatial requirements, functionality, aesthetics, and regulatory compliance to deliver plans that serve as a solid foundation for your construction project.",
-      image: "https://savemax.in/blogs/wp-content/uploads/2024/03/Building-Approval-Plans.jpg",
+      image: "../Building-Approval-Plans.jpg",
     },
     {
       id: "3d-design",
@@ -43,7 +43,7 @@ export default function ServicesPage() {
       title: "Estimation",
       description:
         "Get accurate cost estimates for your construction project. Our detailed estimation service covers material costs, labor expenses, equipment requirements, and other project-related expenditures, helping you plan your budget effectively.",
-      image: "https://constructionreviewonline.com/knowhow/wp-content/uploads/2021/03/construction-estimations.jpg",
+      image: "../construction-estimations.jpg",
     },
     {
       id: "structural-designing",
@@ -51,7 +51,7 @@ export default function ServicesPage() {
       title: "Structural Designing",
       description:
         "Our structural engineers design safe, durable, and efficient structural systems for your building. We ensure that the structure can withstand various loads and environmental conditions while meeting all safety standards and building codes.",
-      image: "https://assets.jswonemsme.com/cementconstruction6_1736774513258_cd6208a52f/cementconstruction6_1736774513258_cd6208a52f.jpeg",
+      image: "../reinforced-concrete.jpg",
     },
     {
       id: "building-construction",
@@ -59,7 +59,7 @@ export default function ServicesPage() {
       title: "Building Construction",
       description:
         "From foundation to finishing touches, we handle all aspects of building construction with precision and care. Our experienced construction team ensures quality workmanship, adherence to timelines, and attention to detail at every stage of the construction process.",
-      image: "https://5.imimg.com/data5/SELLER/Default/2022/1/AJ/SW/HM/137254470/construction.jpg",
+      image: "../construction.jpg",
     },
     {
       id: "building-permit",
@@ -67,7 +67,7 @@ export default function ServicesPage() {
       title: "Building Permit",
       description:
         "We assist you in obtaining all necessary building permits and approvals from local authorities. Our team handles the paperwork, documentation, and follow-ups required for regulatory compliance, ensuring a smooth and legal construction process.",
-      image: "https://thumbs.dreamstime.com/b/buildings-permit-concept-residential-building-project-wooden-stamp-261360046.jpg",
+      image: "../buildings-permit.webp",
     },
     {
       id: "interior-designing",

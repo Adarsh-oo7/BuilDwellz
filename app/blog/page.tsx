@@ -33,7 +33,7 @@ export default function BlogPage() {
       date: "April 28, 2025",
       author: "Jane Smith",
       category: "Vaasthu",
-      image: "../assets/Gallery/blogs/Vastu Chart-Photoroom.png",
+      image: "../assets/Gallery/blogs/Vastu.webp",
     },
     {
       id: 3,

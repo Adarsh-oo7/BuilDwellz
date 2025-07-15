@@ -17,7 +17,7 @@
        date: "April 28, 2025",
        author: "Jaison V",
        category: "Vaasthu",
-       image: "../assets/Gallery/blogs/Vastu Chart-Photoroom.png",
+       image: "../assets/Gallery/blogs/Vastu.webp",
      },
      {
        id: "3",

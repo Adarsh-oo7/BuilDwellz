@@ -13,10 +13,6 @@ import type { Metadata } from "next";
 
 
 
-export const metadata: Metadata = {
-  title: "Contact Us - BuilDwellz Constructions",
-  description: "Learn about BuilDwellz, our vision, and our commitment to premium design and construction in Varkala.",
-};
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({

@@ -8,10 +8,6 @@ import type { Metadata } from "next";
 
 
 
-export const metadata: Metadata = {
-  title: "About Us - BuilDwellz",
-  description: "Learn about BuilDwellz, our vision, and our commitment to premium design and construction in Varkala.",
-};
 
 
 

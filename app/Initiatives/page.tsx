@@ -12,7 +12,7 @@ export default function InitiativesPage() {
         {
             title: "Celebrating Learning: School Year Fest Support",
             description: "At BuilDwellz, we don’t just build homes — we build joy, connection, and community. One of our proudest initiatives is supporting School Year Fest programs in local schools.",
-            image: "../assets/Initiatives/WhatsApp Image 2025-06-25 at 05.13.55_9a24f0eb.jpg",
+            image: "../assets/Initiatives/WhatsApp Image 2025-06-25 at 05.13.55_9a24f0eb.webp",
         },
         {
             title: "Celebrating Together: Festivals with Our Clients",

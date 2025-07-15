@@ -9,10 +9,6 @@ import Head from "next/head";
 import type { Metadata } from "next";
 
 
-export const metadata: Metadata = {
-  title: "Homepage - BuilDwellz Constructions",
-  description: "Learn more about BuilDwellz and our premium construction services.",
-};
 
 
 export default function HomePage() {
