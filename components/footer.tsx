@@ -156,19 +156,19 @@ export default function Footer() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
           viewport={{ once: true }}
-          className="mt-16 pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center"
+          className="mt-16 pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-center items-center"
         >
-          <p className="text-gray-400 text-center md:text-left mb-4 md:mb-0">
+          <p className="text-gray-400 text-center md:text-center mb-4 md:mb-0">
             &copy; {currentYear} BuilDwellz. All rights reserved.
           </p>
-          <div className="flex flex-wrap justify-center gap-4">
+          {/* <div className="flex flex-wrap justify-center gap-4">
             <Link href="/privacy-policy" className="text-gray-400 hover:text-white text-sm transition-colors">
               Privacy Policy
             </Link>
             <Link href="/terms-of-service" className="text-gray-400 hover:text-white text-sm transition-colors">
               Terms of Service
             </Link>
-          </div>
+          </div> */}
         </motion.div>
 
         <motion.div
