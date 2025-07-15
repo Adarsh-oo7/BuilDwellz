@@ -2,11 +2,11 @@ import type { Metadata } from "next";
 import Projectspage from "@/components/Projectspage";
 
 export const metadata: Metadata = {
-  title: "Our Initiatives | Sustainable Construction Projects in Trivandrum",
+  title: "Our Projects | Completed Construction & Design Works in Trivandrum | BuilDwellz",
   description:
-    "Discover BuilDwellz’s innovative and sustainable construction initiatives in Trivandrum. See how we’re building the future with responsibility and excellence.",
+    "Explore our portfolio of completed and ongoing construction projects across Trivandrum. From residential homes to commercial spaces, BuilDwellz delivers quality, innovation, and trust in every build.",
   alternates: {
-    canonical: "https://www.buildwellz.in/initiatives",
+    canonical: "https://www.buildwellz.in/projects",
   },
 };
 

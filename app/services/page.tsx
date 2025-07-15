@@ -7,8 +7,11 @@ import type { Metadata } from "next";
 
 
 export const metadata: Metadata = {
-  title: "Our Services - BuilDwellz",
-  description: "Discover the architectural, interior, and construction services offered by BuilDwellz.",
+  title: "Our Services | Construction, Design & Turnkey Solutions in Trivandrum | BuilDwellz",
+  description: "Discover a wide range of services from BuilDwellz — Trivandrum’s trusted construction company. We specialize in residential and commercial building, architectural design, interior work, and complete turnkey solutions.",
+ alternates: {
+    canonical: "https://www.buildwellz.in/services",
+  },
 };
 
 export default function ServicesPage() {
