@@ -13,8 +13,7 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-playfair" });
 
 export const metadata: Metadata = {
-  title: "BuilDwellz - Premium Designers and Builders",
-  description: "Premium design and construction services in Narikkal, Varkala",
+
   openGraph: {
     title: "BuilDwellz - Premium Designers and Builders",
     description: "Premium design and construction services in Narikkal, Varkala",
@@ -22,7 +21,7 @@ export const metadata: Metadata = {
     siteName: "BuilDwellz",
     images: [
       {
-        url: "https://buildwellz.com/og-image.jpg",
+        url: "https://buildwellz.com/offc.jpg",
         width: 1200,
         height: 630,
         alt: "BuilDwellz - Designing Dreams, Building Reality",
@@ -35,7 +34,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "BuilDwellz - Premium Designers and Builders",
     description: "Premium design and construction services in Narikkal, Varkala",
-    images: ["https://buildwellz.com/og-image.jpg"],
+    images: ["https://buildwellz.com/offc.jpg"],
   },
   icons: {
     icon: "/favicon.ico",
