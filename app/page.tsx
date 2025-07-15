@@ -6,7 +6,6 @@ import { Home, Ruler, Compass, FileText, ChevronRight, ArrowRight, Star, Sparkle
 import Link from "next/link";
 import Image from "next/image";
 import Head from "next/head";
-import type { Metadata } from "next";
 
 
 
@@ -204,14 +203,14 @@ useEffect(() => {
 
   return (
     <div className="min-h-screen bg-white text-black">
-      <Head>
+      {/* <Head>
         <title>BuilDwellz - Designing Dreams, Building Reality</title>
         <meta
           name="description"
           content="Premium design and construction services in Narikkal, Varkala. Transform your vision into reality with BuilDwellz."
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-      </Head>
+      </Head> */}
 
 
       {/* Loading Screen */}
