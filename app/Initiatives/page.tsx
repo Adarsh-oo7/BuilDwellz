@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   description:
     "Discover BuilDwellz’s innovative and sustainable construction initiatives in Trivandrum. See how we’re building the future with responsibility and excellence.",
   alternates: {
-    canonical: "https://www.buildwellz.in/initiatives",
+    canonical: "https://www.buildwellz.in/Initiatives",
   },
 };
 
