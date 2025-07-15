@@ -11,6 +11,7 @@ import { useState } from "react"
 interface BlogPost {
     id: number;
     title: string;
+    description: string;
     excerpt: string;
     content: string;
     date: string;
@@ -27,30 +28,30 @@ interface BlogDetailClientProps {
 // Improved helper function to fix image paths for different deployment scenarios
 // Helper function to fix image paths for Next.js static export on GitHub Pages
 const getImagePath = (path: string) => {
-  // Remove the ../ prefix and ensure it starts with /
-  let cleanPath = path.replace(/^\.\.\//, '/');
-  
-  // For GitHub Pages, detect if we're on a repository page (not a custom domain)
-  // This checks if the current URL contains github.io and adds the repo name as base path
-  if (typeof window !== 'undefined' && process.env.NODE_ENV === 'production') {
-    const currentUrl = window.location.href;
-    if (currentUrl.includes('.github.io/')) {
-      // Extract repository name from URL
-      const urlParts = currentUrl.split('.github.io/');
-      if (urlParts.length > 1) {
-        const repoName = urlParts[1].split('/')[0];
-        return `/${repoName}${cleanPath}`;
-      }
+    // Remove the ../ prefix and ensure it starts with /
+    let cleanPath = path.replace(/^\.\.\//, '/');
+
+    // For GitHub Pages, detect if we're on a repository page (not a custom domain)
+    // This checks if the current URL contains github.io and adds the repo name as base path
+    if (typeof window !== 'undefined' && process.env.NODE_ENV === 'production') {
+        const currentUrl = window.location.href;
+        if (currentUrl.includes('.github.io/')) {
+            // Extract repository name from URL
+            const urlParts = currentUrl.split('.github.io/');
+            if (urlParts.length > 1) {
+                const repoName = urlParts[1].split('/')[0];
+                return `/${repoName}${cleanPath}`;
+            }
+        }
     }
-  }
-  
-  return cleanPath;
+
+    return cleanPath;
 };
 
 
 export default function BlogDetailClient({ currentPost, blogPosts }: BlogDetailClientProps) {
-    const [imageErrors, setImageErrors] = useState<{[key: string]: boolean}>({});
-    
+    const [imageErrors, setImageErrors] = useState<{ [key: string]: boolean }>({});
+
     const otherPosts = blogPosts.filter((p) => p.id !== currentPost.id)
     const sidebarPosts = otherPosts.slice(0, 3)
     const belowContentPosts = otherPosts.slice(3)
@@ -73,7 +74,7 @@ export default function BlogDetailClient({ currentPost, blogPosts }: BlogDetailC
                             <span>{currentPost.date}</span>
                         </div>
                         <h1 className="text-4xl font-bold mb-4">{currentPost.title}</h1>
-                        
+
                         {/* Main Post Image */}
                         {!imageErrors[currentPost.image] ? (
                             <div className="relative w-full h-[500px] rounded-lg overflow-hidden mb-8">
@@ -95,7 +96,7 @@ export default function BlogDetailClient({ currentPost, blogPosts }: BlogDetailC
                                 </div>
                             </div>
                         )}
-                        
+
                         <p className="text-lg leading-relaxed text-gray-700 dark:text-gray-300 whitespace-pre-line">
                             {currentPost.content}
                         </p>
@@ -145,7 +146,7 @@ export default function BlogDetailClient({ currentPost, blogPosts }: BlogDetailC
                                             className="text-sm font-medium text-primary hover:underline block text-center mt-2"
                                         >
                                             {post.title}
-                                        </Link>
+                                            <span className="hidden">{post.description}</span>                                        </Link>
                                     </CardContent>
                                 </Card>
                             ))}
@@ -188,6 +189,7 @@ export default function BlogDetailClient({ currentPost, blogPosts }: BlogDetailC
                                         className="text-sm font-medium text-primary hover:underline block text-center mt-2"
                                     >
                                         {post.title}
+                                        <span className="hidden">{post.description}</span>
                                     </Link>
                                 </CardContent>
                             </Card>
