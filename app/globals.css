@@ -53,9 +53,11 @@
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
   }
+
   h1,
   h2,
   h3,
@@ -215,6 +217,7 @@
 
 /* Ensure content is visible in browsers that don't support animations */
 @media (prefers-reduced-motion: reduce) {
+
   .fade-in-up,
   .fade-in-left,
   .fade-in-right,
@@ -313,6 +316,41 @@
   }
 }
 
+@media (min-width: 1024px) and (max-width: 1104px) {
+  .hero-text1 {
+    font-size: 7rem !important;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .hero-text1 {
+    font-size: 5rem !important;
+  }
+}
+
+@media (min-width: 576px) and (max-width: 768px) {
+  .hero-text1 {
+    margin-top: 60px !important;
+
+  }
+}
+
+@media (min-width: 480px) and (max-width: 576px) {
+  .hero-text1 {
+    margin-top: 50px !important;
+    font-size: 3rem !important;
+
+  }
+}
+
+@media (min-width: 320px) and (max-width: 480px) {
+  .hero-text1 {
+    margin-top: 60px !important;
+    font-size: 2.5rem !important;
+
+  }
+}
+
 /* Magnetic button effect */
 .magnetic-button {
   transition: transform 0.3s cubic-bezier(0.33, 1, 0.68, 1);
@@ -341,6 +379,7 @@
   0% {
     transform: translateX(0);
   }
+
   100% {
     transform: translateX(-100%);
   }
@@ -391,9 +430,11 @@
   0% {
     background-position: 0% 50%;
   }
+
   50% {
     background-position: 100% 50%;
   }
+
   100% {
     background-position: 0% 50%;
   }

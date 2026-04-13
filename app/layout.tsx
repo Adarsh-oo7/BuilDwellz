@@ -4,10 +4,22 @@ import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
-import ClientLayout from "./ClinetLayout"; // New client-side wrapper
+// import ClientLayout from "./ClinetLayout"; 
 import Script from "next/script";
 import WhatsAppButton from "@/components/WhatsAppButton";
+import { Space_Grotesk, Jost } from 'next/font/google';
 
+const space = Space_Grotesk({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700'],
+  variable: "--font-space"
+});
+
+const jost = Jost({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700'],
+  variable: "--font-jost"
+});
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-playfair" });
@@ -42,21 +54,21 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({
-  
+
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
     <html lang="en" role="document">
-      <body className={`${inter.variable} ${playfair.variable} font-sans`}>
+      <body className={`${inter.variable} ${playfair.variable} ${jost.variable} ${space.variable} font-sans`}>
 
-        <ClientLayout>
+        {/* <ClientLayout> */}
           <Navbar />
           <main id="main-content">{children}</main>
-          <WhatsAppButton/>
+          <WhatsAppButton />
           <Footer />
-        </ClientLayout>
+        {/* </ClientLayout> */}
       </body>
     </html>
   );

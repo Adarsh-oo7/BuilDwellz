@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useEffect, useState } from "react";
-import { motion, useScroll, useTransform,useAnimation, useSpring, AnimatePresence } from "framer-motion";
+import { motion, useScroll, useTransform, useAnimation, useSpring, AnimatePresence } from "framer-motion";
 import { Home, Ruler, Compass, FileText, ChevronRight, ArrowRight, Star, Sparkles, Info, PenSquare, Briefcase, Phone, Wrench, Paintbrush, Hammer } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
@@ -35,21 +35,21 @@ export default function HomePage() {
     return () => clearTimeout(timer);
   }, []);
 
-useEffect(() => {
-  if (!isHovered) {
-    controls.start({
-      x: ["0%", "-50%"],
-      transition: {
-        repeat: Infinity,
-        repeatType: "loop",
-        duration: 10, // Adjust speed here
-        ease: "linear",
-      },
-    });
-  } else {
-    controls.stop(); // Pause on hover
-  }
-}, [isHovered]);
+  useEffect(() => {
+    if (!isHovered) {
+      controls.start({
+        x: ["0%", "-50%"],
+        transition: {
+          repeat: Infinity,
+          repeatType: "loop",
+          duration: 10, // Adjust speed here
+          ease: "linear",
+        },
+      });
+    } else {
+      controls.stop(); // Pause on hover
+    }
+  }, [isHovered]);
 
   // Custom cursor movement
 
@@ -120,14 +120,14 @@ useEffect(() => {
       text: "BuilDwellz transformed our dream home into reality. Their attention to detail and professionalism exceeded our expectations.",
       image: "../testimonial1.jpg",
     },
-     {
+    {
       name: "Shaiju",
       location: "Varkala",
       rating: 5,
       text: "Choosing BuildWellz was the best decision we made for our home project. Our home turned out better than we imagined.",
       image: "../testimonial1.jpg",
     },
-     {
+    {
       name: "Sudheesh",
       location: "Varkala",
       rating: 5,
@@ -149,15 +149,15 @@ useEffect(() => {
       image: "./assets/Gallery/proj1/p1.jpg",
       type: "Residential",
     },
-     {
+    {
       title: "Traditional Home",
       location: "Varkala, Trivandrum",
       image: "./assets/Gallery/proj3/p2.jpg",
       type: "Residential",
     },
-  
-   
-   
+
+
+
   ];
 
   const navigationLinks = [
@@ -172,7 +172,7 @@ useEffect(() => {
     // ... (other navigation links remain unchanged)
   ];
 
-  const ScrollReveal = ({ children, direction = "up", delay = 0 }) => {
+  const ScrollReveal = ({ children, direction = "up", delay = 0 }: { children: React.ReactNode; direction?: string; delay?: number }) => {
     return (
       <motion.div
         initial={{
@@ -189,7 +189,7 @@ useEffect(() => {
     );
   };
 
-  const MagneticButton = ({ children }) => {
+  const MagneticButton = ({ children }: { children: React.ReactNode }) => {
     return (
       <motion.div
         whileHover={{ scale: 1.02 }}
@@ -299,13 +299,15 @@ useEffect(() => {
             className="flex flex-col sm:flex-row justify-center gap-6"
           >
             <MagneticButton>
-              <button
-                className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white px-8 py-4 rounded-lg shadow-2xl flex items-center transition-all duration-300"
-                aria-label="Get a quote"
-              >
-                Get a Quote
-                <Sparkles className="ml-2 h-4 w-4" />
-              </button>
+              <Link href="/contact">
+                <button
+                  className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white px-8 py-4 rounded-lg shadow-2xl flex items-center transition-all duration-300"
+                  aria-label="Get a quote"
+                >
+                  Get a Quote
+                  <Sparkles className="ml-2 h-4 w-4" />
+                </button>
+              </Link>
             </MagneticButton>
 
             <MagneticButton>
@@ -603,7 +605,7 @@ useEffect(() => {
               📍 Narikkal, Varkala
             </p>
             <p className="text-lg text-white mb-2">
-              📞 8137834741 | 8590128023 
+              📞 8137834741 | 8590128023
             </p>
             <p className="text-lg text-white mb-8">
               📧 <a href="mailto:buildwellzvarkala@gmail.com" className="underline">buildwellzvarkala@gmail.com</a>

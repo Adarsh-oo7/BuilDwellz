@@ -62,6 +62,10 @@ const config = {
       fontFamily: {
         sans: ["var(--font-inter)"],
         playfair: ["var(--font-playfair)"],
+        space: ['var(--font-space)', 'sans-serif'],
+        jost: ['var(--font-jost)', 'sans-serif'],
+        quick: ['var(--font-quick)', 'sans-serif'],
+
       },
       keyframes: {
         "accordion-down": {
