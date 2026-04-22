@@ -6,7 +6,7 @@ import { Home, Ruler, Compass, FileText, ChevronRight, ArrowRight, Star, Sparkle
 import Link from "next/link";
 import Image from "next/image";
 import Head from "next/head";
-// import Hero from "@/components/Hero"
+import Hero from "@/components/Hero"
 
 
 
@@ -246,8 +246,8 @@ export default function HomePage() {
       </AnimatePresence>
 
       {/* Hero Section */}
-      {/* <Hero/> */}
-       <section ref={targetRef} className="relative min-h-screen flex items-center">
+      <Hero/> 
+       {/* <section ref={targetRef} className="relative min-h-screen flex items-center">
         <div className="absolute inset-0">
           <Image
             src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80"
@@ -323,7 +323,7 @@ export default function HomePage() {
             </MagneticButton>
           </motion.div>
         </div>
-      </section>
+      </section> */}
 
       {/* About Section */}
       <section className="py-20 bg-gray-50 overflow-hidden relative">
