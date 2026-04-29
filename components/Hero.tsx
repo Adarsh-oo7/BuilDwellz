@@ -1,311 +1,281 @@
 "use client";
 
 import {
-  Canvas,
-  useFrame,
-  useLoader,
-  useThree,
-} from "@react-three/fiber";
-import { Suspense, useRef, useMemo, useEffect, useState } from "react";
-import * as THREE from "three";
+  motion,
+  useReducedMotion,
+  useScroll,
+  useTransform,
+} from "framer-motion";
+import { useCallback, useEffect, useRef } from "react";
 
-/* ================= IMAGE REVEAL ================= */
+const TOTAL_FRAMES = 147;
+const SEQUENCE_FOLDER = "/hero-images";
+const FILE_EXTENSION = "webp";
+const BACKGROUND_COLOR = "#000000";
+const PRIORITY_PRELOAD_FRAMES = 18;
+const BACKGROUND_BATCH_SIZE = 8;
 
-function ImageReveal({ externalMouse, isActive, device }: any) {
-  const materialRef = useRef<any>();
-  const { viewport, size, gl } = useThree();
+type LoadedFrame = {
+  image: HTMLImageElement;
+  loaded: boolean;
+  requested: boolean;
+};
 
-  const smoothMouse = useRef(new THREE.Vector2(0.5, 0.5));
-  const activeRef = useRef(0);
+const buildFramePath = (frame: number) =>
+  `${SEQUENCE_FOLDER}/frame_${String(frame).padStart(4, "0")}.${FILE_EXTENSION}`;
 
-  const textureBlueprint = useLoader(
-    THREE.TextureLoader,
-    `/images/${device}/blueprint.jpg`
-  );
+export function Hero() {
+  const reducedMotion = useReducedMotion();
+  const sectionRef = useRef<HTMLElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const framesRef = useRef<LoadedFrame[]>([]);
+  const animationRafRef = useRef<number | null>(null);
+  const targetFrameRef = useRef(0);
+  const currentFrameRef = useRef(0);
+  const lastDrawnFrameRef = useRef(-1);
 
-  const textureRender = useLoader(
-    THREE.TextureLoader,
-    `/images/${device}/render.jpg`
-  );
+  const requestFrame = useCallback((index: number) => {
+    if (index < 0 || index >= TOTAL_FRAMES) return;
+    const frame = framesRef.current[index];
+    if (!frame || frame.requested) return;
+    frame.requested = true;
+    frame.image.src = buildFramePath(index + 1);
+  }, []);
 
-  const maxAnisotropy = gl.capabilities.getMaxAnisotropy();
+  const findNearestLoadedFrame = useCallback((index: number) => {
+    const direct = framesRef.current[index];
+    if (direct?.loaded) return index;
 
-  [textureBlueprint, textureRender].forEach((tex) => {
-    tex.wrapS = tex.wrapT = THREE.ClampToEdgeWrapping;
-    tex.minFilter = THREE.LinearMipmapLinearFilter;
-    tex.magFilter = THREE.LinearFilter;
-    tex.generateMipmaps = true;
-    tex.anisotropy = maxAnisotropy;
+    for (let distance = 1; distance < TOTAL_FRAMES; distance += 1) {
+      const backward = index - distance;
+      if (backward >= 0 && framesRef.current[backward]?.loaded) return backward;
+      const forward = index + distance;
+      if (forward < TOTAL_FRAMES && framesRef.current[forward]?.loaded) return forward;
+    }
+
+    return -1;
+  }, []);
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end end"],
   });
 
-  // ✅ PERFECT COVER SCALE
-  const scale = useMemo(() => {
-    if (!textureRender.image)
-      return [viewport.width, viewport.height, 1] as const;
+  const titleY = useTransform(scrollYProgress, [0, 0.35], ["20vh", "0vh"]);
+  const titleOpacity = useTransform(scrollYProgress, [0.05, 0.2, 0.35], [0, 1, 0]);
+  const subtitleY = useTransform(scrollYProgress, [0.25, 0.8], ["12vh", "-4vh"]);
+  const subtitleOpacity = useTransform(
+    scrollYProgress,
+    [0.3, 0.5, 0.75],
+    [0, 1, 0],
+  );
 
-    const imageAspect =
-      textureRender.image.width / textureRender.image.height;
-    const viewportAspect = viewport.width / viewport.height;
+  const drawFrame = useCallback((index: number) => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
 
-    let scaleX = viewport.width;
-    let scaleY = viewport.height;
+    const context = canvas.getContext("2d");
+    if (!context) return;
 
-    if (viewportAspect > imageAspect) {
-      scaleY = viewport.width / imageAspect;
+    const viewportWidth = canvas.clientWidth || window.innerWidth;
+    const viewportHeight = canvas.clientHeight || window.innerHeight;
+
+    const drawableIndex = findNearestLoadedFrame(index);
+    const frame = drawableIndex >= 0 ? framesRef.current[drawableIndex] : undefined;
+
+    // ✅ Just show black screen while loading — no text
+    context.fillStyle = BACKGROUND_COLOR;
+    context.fillRect(0, 0, viewportWidth, viewportHeight);
+
+    if (!frame?.loaded) return;
+
+    const image = frame.image;
+    const imageRatio = image.width / image.height;
+    const canvasRatio = viewportWidth / viewportHeight;
+
+    let drawWidth = viewportWidth;
+    let drawHeight = viewportHeight;
+
+    if (imageRatio > canvasRatio) {
+      drawWidth = viewportHeight * imageRatio;
     } else {
-      scaleX = viewport.height * imageAspect;
+      drawHeight = viewportWidth / imageRatio;
     }
 
-    if (device === "desktop") return [scaleX, scaleY, 1];
-
-    if (device === "ipad") {
-      scaleX *= 0.88;
-      scaleY *= 0.88;
-    }
-
-    if (device === "mobile") {
-      scaleX *= 1;
-      scaleY *= 1;
-    }
-
-    if (size.width >= 424 && size.width <= 520) {
-      const factor = THREE.MathUtils.mapLinear(
-        size.width,
-        424,
-        520,
-        0.85,
-        1
-      );
-      scaleX *= factor;
-      scaleY *= factor;
-    }
-
-    return [scaleX, scaleY, 1] as const;
-  }, [
-    textureRender,
-    viewport.width,
-    viewport.height,
-    device,
-    size.width,
-  ]);
-
-  const uniforms = useMemo(
-    () => ({
-      uTexture1: { value: textureRender },
-      uTexture2: { value: textureBlueprint },
-      uMouse: { value: new THREE.Vector2(0.5, 0.5) },
-      uTime: { value: 0 },
-      uResolution: { value: new THREE.Vector2(1, 1) },
-      uActive: { value: 0 },
-      uIsActive: { value: 0 },
-    }),
-    [textureRender, textureBlueprint]
-  );
-
-  useFrame(() => {
-    if (!materialRef.current) return;
-
-    smoothMouse.current.lerp(externalMouse.current, 0.1);
-    uniforms.uMouse.value.copy(smoothMouse.current);
-
-    activeRef.current = THREE.MathUtils.lerp(
-      activeRef.current,
-      isActive.current ? 1 : 0,
-      0.08
-    );
-
-    uniforms.uActive.value = activeRef.current;
-    uniforms.uIsActive.value = isActive.current ? 1 : 0;
-
-    uniforms.uTime.value += 0.02;
-    uniforms.uResolution.value.set(size.width, size.height);
-  });
-
-  return (
-    <mesh scale={scale}>
-      <planeGeometry args={[1, 1]} />
-
-      <shaderMaterial
-        ref={materialRef}
-        uniforms={uniforms}
-        vertexShader={`
-          varying vec2 vUv;
-          void main() {
-            vUv = uv;
-            gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-          }
-        `}
-        fragmentShader={`
-          uniform sampler2D uTexture1;
-          uniform sampler2D uTexture2;
-          uniform vec2 uMouse;
-          uniform float uTime;
-          uniform vec2 uResolution;
-          uniform float uActive;
-          uniform float uIsActive;
-
-          varying vec2 vUv;
-
-          vec3 adjustContrast(vec3 color, float contrast) {
-            return (color - 0.5) * contrast + 0.5;
-          }
-
-          void main() {
-            vec2 uv = vUv;
-
-            // Default render
-            if (uIsActive < 0.5) {
-              gl_FragColor = texture2D(uTexture1, uv);
-              return;
-            }
-
-            // Distortion
-            vec2 dir = uv - uMouse;
-            float distRaw = length(dir);
-            uv -= dir * 0.08 * exp(-distRaw * 6.0);
-
-            // ✅ PERFECT CIRCLE (FINAL FIX)
-            vec2 uvCorrected = (vUv - 0.5) * vec2(
-              uResolution.x / uResolution.y,
-              1.0
-            ) + 0.5;
-
-            vec2 mouseCorrected = (uMouse - 0.5) * vec2(
-              uResolution.x / uResolution.y,
-              1.0
-            ) + 0.5;
-
-            float dist = distance(uvCorrected, mouseCorrected);
-
-            float radius = 0.24 * uActive;
-            float mask = smoothstep(radius, radius - 0.04, dist);
-
-            vec4 render = texture2D(uTexture1, uv);
-            vec4 blueprint = texture2D(uTexture2, uv);
-
-            vec4 color = mix(render, blueprint, mask);
-
-            float contrastStrength = mix(1.0, 1.08, uActive);
-            color.rgb = adjustContrast(color.rgb, contrastStrength);
-
-            float gray = dot(color.rgb, vec3(0.299, 0.587, 0.114));
-            float saturationStrength = mix(1.0, 1.05, uActive);
-            color.rgb = mix(vec3(gray), color.rgb, saturationStrength);
-
-            vec2 pixel = 1.0 / uResolution;
-            vec3 sharpSample =
-                texture2D(uTexture1, uv + pixel * vec2(1.0, 0.0)).rgb +
-                texture2D(uTexture1, uv + pixel * vec2(-1.0, 0.0)).rgb +
-                texture2D(uTexture1, uv + pixel * vec2(0.0, 1.0)).rgb +
-                texture2D(uTexture1, uv + pixel * vec2(0.0, -1.0)).rgb;
-
-            vec3 sharpened = color.rgb * 2.0 - sharpSample * 0.25;
-            color.rgb = mix(color.rgb, sharpened, 0.12 * uActive);
-
-            float glow = smoothstep(radius, radius - 0.06, dist);
-            color.rgb *= 1.0 - glow * 0.22 * uActive;
-
-            float vignette = smoothstep(0.9, 0.3, length(vUv - 0.5));
-            color.rgb *= vignette;
-
-            gl_FragColor = color;
-          }
-        `}
-      />
-    </mesh>
-  );
-}
-
-/* ================= HERO ================= */
-
-export default function HeroShader() {
-  const mouse = useRef(new THREE.Vector2(0.5, 0.5));
-  const isActive = useRef(false);
-
-  const [device, setDevice] = useState<string | null>(null);
+    const drawX = (viewportWidth - drawWidth) / 2;
+    const drawY = (viewportHeight - drawHeight) / 2;
+    context.drawImage(image, drawX, drawY, drawWidth, drawHeight);
+  }, [findNearestLoadedFrame]);
 
   useEffect(() => {
     const handleResize = () => {
-      const w = window.innerWidth;
-      const h = window.innerHeight;
-      const ratio = w / h;
-
-      const isTouch =
-        "ontouchstart" in window || navigator.maxTouchPoints > 0;
-
-      if (ratio < 0.7) setDevice("mobile");
-      else if (ratio <= 1.4 && isTouch) setDevice("ipad");
-      else if (ratio <= 1.6 && isTouch) setDevice("tablet");
-      else setDevice("desktop");
+      const canvas = canvasRef.current;
+      if (!canvas) return;
+      const dpr = window.devicePixelRatio || 1;
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+      canvas.width = Math.round(width * dpr);
+      canvas.height = Math.round(height * dpr);
+      canvas.style.width = `${width}px`;
+      canvas.style.height = `${height}px`;
+      const context = canvas.getContext("2d");
+      if (context) {
+        context.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+      const activeFrame = Math.min(
+        TOTAL_FRAMES - 1,
+        Math.max(0, Math.round(scrollYProgress.get() * (TOTAL_FRAMES - 1))),
+      );
+      targetFrameRef.current = reducedMotion ? 0 : activeFrame;
+      currentFrameRef.current = targetFrameRef.current;
+      lastDrawnFrameRef.current = -1;
+      drawFrame(Math.round(currentFrameRef.current));
     };
 
     handleResize();
     window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [drawFrame, reducedMotion, scrollYProgress]);
 
-  const updateMouse = (x: number, y: number) => {
-    mouse.current.set(x, y);
-  };
+  useEffect(() => {
+    const nextFrames: LoadedFrame[] = Array.from({ length: TOTAL_FRAMES }, () => {
+      const image = new Image();
+      image.decoding = "async";
+      return { image, loaded: false, requested: false };
+    });
 
-  let lastY = 0;
+    nextFrames.forEach((frame) => {
+      frame.image.onerror = () => undefined;
+    });
 
-  if (!device) return null;
+    framesRef.current = nextFrames;
+
+    // ✅ Load frame 1 first — draw immediately when ready
+    const firstFrame = nextFrames[0];
+    firstFrame.requested = true;
+    firstFrame.image.onload = () => {
+      firstFrame.loaded = true;
+      drawFrame(0);
+    };
+    firstFrame.image.src = buildFramePath(1);
+
+    // ✅ Load remaining priority frames with onload handler
+    for (let i = 1; i < Math.min(PRIORITY_PRELOAD_FRAMES, TOTAL_FRAMES); i += 1) {
+      const frame = nextFrames[i];
+      if (!frame || frame.requested) continue;
+      frame.requested = true;
+      frame.image.onload = () => {
+        frame.loaded = true;
+      };
+      frame.image.src = buildFramePath(i + 1);
+    }
+
+    // ✅ Background load remaining frames
+    let bgIndex = PRIORITY_PRELOAD_FRAMES;
+    const backgroundLoader = window.setInterval(() => {
+      for (
+        let batchCount = 0;
+        batchCount < BACKGROUND_BATCH_SIZE && bgIndex < TOTAL_FRAMES;
+        batchCount += 1, bgIndex += 1
+      ) {
+        const frame = nextFrames[bgIndex];
+        if (!frame || frame.requested) continue;
+        frame.requested = true;
+        frame.image.onload = () => {
+          frame.loaded = true;
+        };
+        frame.image.src = buildFramePath(bgIndex + 1);
+      }
+      if (bgIndex >= TOTAL_FRAMES) {
+        window.clearInterval(backgroundLoader);
+      }
+    }, 70);
+
+    return () => {
+      window.clearInterval(backgroundLoader);
+    };
+  }, [drawFrame, requestFrame]);
+
+  useEffect(() => {
+    const updateTargetFrame = () => {
+      const nextFrame = Math.min(
+        TOTAL_FRAMES - 1,
+        Math.max(0, scrollYProgress.get() * (TOTAL_FRAMES - 1)),
+      );
+      targetFrameRef.current = reducedMotion ? 0 : nextFrame;
+      requestFrame(Math.round(nextFrame));
+    };
+
+    updateTargetFrame();
+    return scrollYProgress.on("change", updateTargetFrame);
+  }, [reducedMotion, requestFrame, scrollYProgress]);
+
+  useEffect(() => {
+    const SMOOTHING = 0.18;
+    const animate = () => {
+      if (reducedMotion) {
+        const staticFrame = 0;
+        if (lastDrawnFrameRef.current !== staticFrame) {
+          drawFrame(staticFrame);
+          lastDrawnFrameRef.current = staticFrame;
+        }
+        animationRafRef.current = requestAnimationFrame(animate);
+        return;
+      }
+
+      const delta = targetFrameRef.current - currentFrameRef.current;
+      currentFrameRef.current += delta * SMOOTHING;
+      if (Math.abs(delta) < 0.01) {
+        currentFrameRef.current = targetFrameRef.current;
+      }
+
+      const frameToDraw = Math.round(currentFrameRef.current);
+      if (frameToDraw !== lastDrawnFrameRef.current) {
+        drawFrame(frameToDraw);
+        lastDrawnFrameRef.current = frameToDraw;
+      }
+
+      animationRafRef.current = requestAnimationFrame(animate);
+    };
+
+    animationRafRef.current = requestAnimationFrame(animate);
+    return () => {
+      if (animationRafRef.current) {
+        cancelAnimationFrame(animationRafRef.current);
+      }
+    };
+  }, [drawFrame, reducedMotion]);
 
   return (
-    <section
-      className="w-full h-screen relative overflow-hidden"
-      style={{ touchAction: "pan-y" }}
-      onMouseMove={(e) => {
-        isActive.current = true;
-        updateMouse(
-          e.clientX / window.innerWidth,
-          1 - e.clientY / window.innerHeight
-        );
-      }}
-      onMouseLeave={() => (isActive.current = false)}
-      onTouchStart={(e) => {
-        isActive.current = true;
-        const t = e.touches[0];
-        lastY = t.clientY;
+    <section ref={sectionRef} className="relative h-[340vh] sm:h-[380vh] lg:h-[420vh]">
+      <div className="sticky top-0 h-[100svh] overflow-hidden bg-black">
+        <canvas ref={canvasRef} className="absolute inset-0 block h-full w-full" />
 
-        updateMouse(
-          t.clientX / window.innerWidth,
-          1 - t.clientY / window.innerHeight
-        );
-      }}
-      onTouchMove={(e) => {
-        const t = e.touches[0];
-        const deltaY = Math.abs(t.clientY - lastY);
-        lastY = t.clientY;
+        <motion.div
+          className="pointer-events-none absolute inset-0 flex items-center justify-center"
+          style={{ opacity: titleOpacity, y: titleY }}
+        >
+          <div className="px-4 text-center sm:px-6">
+            <p className="text-[10px] uppercase tracking-[0.26em] text-white/90 sm:text-xs sm:tracking-[0.45em]">
+              Designers and Builders
+            </p>
+            <h2 className="mt-4 text-3xl font-semibold tracking-tight text-white/90 sm:mt-5 sm:text-4xl md:text-5xl lg:text-6xl">
+              BUILDWELLZ
+            </h2>
+          </div>
+        </motion.div>
 
-        if (deltaY < 12) {
-          updateMouse(
-            t.clientX / window.innerWidth,
-            1 - t.clientY / window.innerHeight
-          );
-        }
-      }}
-      onTouchEnd={() => (isActive.current = false)}
-    >
-      <Canvas camera={{ position: [0, 0, 1] }}>
-        <Suspense fallback={null}>
-          <ImageReveal
-            key={device}
-            device={device}
-            externalMouse={mouse}
-            isActive={isActive}
-          />
-        </Suspense>
-      </Canvas>
-
-      <div className="absolute inset-0 flex flex-col items-center justify-center text-white pointer-events-none z-10">
-        <h1 className="text-5xl md:text-7xl font-bold tracking-tight">
-          BuilDwellz
-        </h1>
-        <p className="mt-4 text-lg opacity-70">
-          Designing Dreams, Building Reality
-        </p>
+        <motion.div
+          className="pointer-events-none absolute inset-0 flex items-end justify-start p-5 sm:p-8 md:p-14"
+          style={{ opacity: subtitleOpacity, y: subtitleY }}
+        >
+          <p className="max-w-[18rem] text-xs leading-relaxed tracking-tight text-white/90 sm:max-w-sm sm:text-sm md:text-base">
+            Designing Dreams, Building Reality <br />
+            We take comfort and home living to profound new heights.
+          </p>
+        </motion.div>
       </div>
     </section>
   );

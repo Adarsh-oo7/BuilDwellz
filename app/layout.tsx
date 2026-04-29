@@ -61,13 +61,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" role="document">
+      <head>
+        <link rel="preload" as="image" href="/hero-images/frame_0001.webp" />
+      </head>
       <body className={`${inter.variable} ${playfair.variable} ${jost.variable} ${space.variable} font-sans`}>
 
         {/* <ClientLayout> */}
-          <Navbar />
-          <main id="main-content">{children}</main>
-          <WhatsAppButton />
-          <Footer />
+        <Navbar />
+        <main id="main-content">{children}</main>
+        <WhatsAppButton />
+        <Footer />
         {/* </ClientLayout> */}
       </body>
     </html>
