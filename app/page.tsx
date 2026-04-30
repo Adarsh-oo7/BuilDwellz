@@ -6,7 +6,7 @@ import { Home, Ruler, Compass, FileText, ChevronRight, ArrowRight, Star, Sparkle
 import Link from "next/link";
 import Image from "next/image";
 import Head from "next/head";
-
+import { Hero } from "@/components/Hero"
 
 
 
@@ -60,6 +60,8 @@ export default function HomePage() {
       description: "Detailed architectural plans tailored to your needs and preferences.",
       gradient: "from-red-500 to-red-600",
       delay: 0.1,
+      hoverBg: "hover:bg-red-50",
+      badge: "PLAN"
     },
     {
       icon: <Compass className="h-7 w-7" />,
@@ -67,6 +69,8 @@ export default function HomePage() {
       description: "Visualize your project with realistic 3D renderings before construction begins.",
       gradient: "from-yellow-500 to-red-500",
       delay: 0.2,
+      hoverBg: "hover:bg-yellow-50",
+      badge: "DESIGN"
     },
     {
       icon: <Home className="h-7 w-7" />,
@@ -74,6 +78,8 @@ export default function HomePage() {
       description: "Traditional architectural principles for harmony and positive energy.",
       gradient: "from-red-600 to-black",
       delay: 0.3,
+      hoverBg: "hover:bg-blue-50",
+      badge: "CONSULTING"
     },
     {
       icon: <FileText className="h-7 w-7" />,
@@ -81,6 +87,8 @@ export default function HomePage() {
       description: "Accurate cost estimates and budgeting for your construction project.",
       gradient: "from-yellow-400 to-yellow-600",
       delay: 0.4,
+      hoverBg: "hover:bg-green-50",
+      badge: "BUDGET"
     },
     {
       icon: <Wrench className="h-7 w-7" />,
@@ -88,6 +96,8 @@ export default function HomePage() {
       description: "Robust structural designs ensuring safety and durability.",
       gradient: "from-red-500 to-red-600",
       delay: 0.5,
+      hoverBg: "hover:bg-violet-50",
+      badge: "STRUCTURAL"
     },
     {
       icon: <Hammer className="h-7 w-7" />,
@@ -95,6 +105,8 @@ export default function HomePage() {
       description: "End-to-end construction services with top-quality materials.",
       gradient: "from-yellow-500 to-red-500",
       delay: 0.6,
+      hoverBg: "hover:bg-red-50",
+      badge: "BUILD"
     },
     {
       icon: <FileText className="h-7 w-7" />,
@@ -102,6 +114,8 @@ export default function HomePage() {
       description: "Hassle-free permit acquisition for your construction projects.",
       gradient: "from-red-600 to-black",
       delay: 0.7,
+      hoverBg: "hover:bg-gray-100",
+      badge: "PAPERS"
     },
     {
       icon: <Paintbrush className="h-7 w-7" />,
@@ -109,6 +123,8 @@ export default function HomePage() {
       description: "Stunning interior designs to elevate your living spaces.",
       gradient: "from-yellow-400 to-yellow-600",
       delay: 0.8,
+      hoverBg: "hover:bg-blue-50",
+      badge: "INTERIORS"
     },
   ];
 
@@ -203,14 +219,14 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-white text-black">
-      {/* <Head>
+      <Head>
         <title>BuilDwellz - Designing Dreams, Building Reality</title>
         <meta
           name="description"
           content="Premium design and construction services in Narikkal, Varkala. Transform your vision into reality with BuilDwellz."
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-      </Head> */}
+      </Head>
 
 
       {/* Loading Screen */}
@@ -246,7 +262,8 @@ export default function HomePage() {
       </AnimatePresence>
 
       {/* Hero Section */}
-      <section ref={targetRef} className="relative min-h-screen flex items-center">
+      <Hero />
+      {/* <section ref={targetRef} className="relative min-h-screen flex items-center">
         <div className="absolute inset-0">
           <Image
             src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80"
@@ -322,7 +339,7 @@ export default function HomePage() {
             </MagneticButton>
           </motion.div>
         </div>
-      </section>
+      </section> */}
 
       {/* About Section */}
       <section className="py-20 bg-gray-50 overflow-hidden relative">
@@ -332,8 +349,15 @@ export default function HomePage() {
               <div>
                 <h2 className="text-3xl md:text-5xl font-bold mb-8 text-black">
                   About{" "}
-                  <span className="bg-gradient-to-r from-red-600 to-yellow-500 bg-clip-text text-transparent">
-                    BuilDwellz
+                  <span className="font-semibold inline-block cursor-pointer group transition-transform duration-300 hover:scale-105">
+                    <span className="transition-all duration-500 group-hover:bg-gradient-to-r group-hover:from-red-600 group-hover:to-yellow-500 group-hover:bg-clip-text group-hover:text-transparent">
+
+                      <span className="text-red-600">B</span>
+                      <span className="text-black">uil</span>
+                      <span className="text-red-600">D</span>
+                      <span className="text-black">wellz</span>
+
+                    </span>
                   </span>
                 </h2>
 
@@ -391,31 +415,66 @@ export default function HomePage() {
             </ScrollReveal>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
             {services.map((service, index) => (
               <ScrollReveal key={index} delay={service.delay}>
                 <motion.div
-                  whileHover={{ y: -10, scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  transition={{ type: "spring", stiffness: 300 }}
-                  className="flex flex-col justify-between p-6 rounded-2xl bg-white backdrop-blur-sm shadow-xl hover:shadow-2xl transition-all duration-500 group relative overflow-hidden border border-gray-200 h-full min-h-[320px]"
+                  initial="initial"
+                  whileHover="hover"
+                  className={`group relative border border-gray-200 rounded-3xl p-8 
+  bg-[#f9f9f9] ${service.hoverBg} hover:border-gray-300 
+  transition-all duration-500 h-full flex flex-col justify-between overflow-hidden`}
                 >
-                  <div className={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-300`} />
+                  {/* 🔥 Badge */}
+                  <span
+                    className="absolute top-6 right-6 px-3 py-1 text-xs font-medium 
+    bg-orange-100 text-orange-600 rounded-full 
+    opacity-0 translate-y-2 
+    group-hover:opacity-100 group-hover:translate-y-0 
+    transition-all duration-300"
+                  >
+                    {service.badge}
+                  </span>
 
-                  <div className="relative z-10 flex flex-col flex-grow">
-                    <div className={`bg-gradient-to-br ${service.gradient} p-4 rounded-2xl w-16 h-16 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
-                      <div className="text-white">{service.icon}</div>
-                    </div>
-
-                    <h3 className="text-xl font-bold mb-3 text-black">{service.title}</h3>
-
-                    <p className="text-gray-600 mb-6 leading-relaxed flex-grow">{service.description}</p>
-
-                    <Link href="/services" className="flex items-center text-red-600 hover:text-red-700 font-medium transition-colors duration-300 mt-auto">
-                      Learn more
-                      <ChevronRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                    </Link>
+                  {/* Top Number + Line */}
+                  <div className="flex items-center gap-4 mb-8">
+                    <span className="text-gray-400 font-medium text-sm">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <div className="flex-1 h-px bg-gray-300"></div>
                   </div>
+
+                  {/* Icon */}
+                  <motion.div
+                    variants={{
+                      initial: { rotate: 0, scale: 1 },
+                      hover: { rotate: -8, scale: 1.1 }
+                    }}
+                    transition={{ type: "spring", stiffness: 200 }}
+                    className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-6 
+    bg-gradient-to-br ${service.gradient} text-white`}
+                  >
+                    {service.icon}
+                  </motion.div>
+
+                  {/* Title */}
+                  <h3 className="text-xl font-semibold text-black mb-3">
+                    {service.title}
+                  </h3>
+
+                  {/* Description */}
+                  <p className="text-gray-600 leading-relaxed mb-6 flex-grow">
+                    {service.description}
+                  </p>
+
+                  {/* Learn More */}
+                  <Link
+                    href="/services"
+                    className="flex items-center gap-2 text-red-600 font-medium text-sm group-hover:gap-3 transition-all"
+                  >
+                    LEARN MORE
+                    <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  </Link>
                 </motion.div>
               </ScrollReveal>
             ))}

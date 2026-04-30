@@ -6,6 +6,7 @@ export interface UpcomingProject {
   year: string
   description: string
   image: string
+  gallery?: string[] // ✅ Make gallery optional
 }
 
 export const upcomingProjects = [
@@ -26,7 +27,6 @@ export const upcomingProjects = [
       "../assets/Gallery/upcoming/APPARTMENT_Photo - 6.webp",
       "../assets/Gallery/upcoming/APPARTMENT_Photo - 7.webp",
       "../assets/Gallery/upcoming/APPARTMENT_Photo - 8.webp",
-
     ]
   },
   {
@@ -41,6 +41,15 @@ export const upcomingProjects = [
       "../assets/Gallery/upcoming/kallambalam2.webp",
       "../assets/Gallery/upcoming/kallambalam1.webp",
     ]
+  },
+  {
+    id: "upcoming-3",
+    title: "Luxury home",
+    category: "residential",
+    location: "Varkala, Kerala",
+    year: "2026",
+    description: "A refined residence blending modern architecture with natural elements.",
+    image: "../assets/Gallery/upcoming/vp 3.jpg (1).jpeg",
+    // ✅ No gallery needed — will fall back to main image
   }
 ];
-
