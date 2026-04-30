@@ -284,6 +284,7 @@
   opacity: 1;
 }
 
+
 /* Smooth scrollbar for desktop */
 @media (min-width: 1024px) {
   html.has-scroll-smooth {

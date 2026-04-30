@@ -246,8 +246,8 @@ export default function HomePage() {
       </AnimatePresence>
 
       {/* Hero Section */}
-      <Hero/> 
-       {/* <section ref={targetRef} className="relative min-h-screen flex items-center">
+      <Hero />
+      {/* <section ref={targetRef} className="relative min-h-screen flex items-center">
         <div className="absolute inset-0">
           <Image
             src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80"
@@ -333,8 +333,15 @@ export default function HomePage() {
               <div>
                 <h2 className="text-3xl md:text-5xl font-bold mb-8 text-black">
                   About{" "}
-                  <span className="bg-gradient-to-r from-red-600 to-yellow-500 bg-clip-text text-transparent">
-                    BuilDwellz
+                  <span className="font-semibold inline-block cursor-pointer group transition-transform duration-300 hover:scale-105">
+                    <span className="transition-all duration-500 group-hover:bg-gradient-to-r group-hover:from-red-600 group-hover:to-yellow-500 group-hover:bg-clip-text group-hover:text-transparent">
+
+                      <span className="text-red-600">B</span>
+                      <span className="text-black">uil</span>
+                      <span className="text-red-600">D</span>
+                      <span className="text-black">wellz</span>
+
+                    </span>
                   </span>
                 </h2>
 
