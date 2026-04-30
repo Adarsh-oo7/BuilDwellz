@@ -274,10 +274,10 @@ export function Hero() {
           style={{ opacity: titleOpacity, y: titleY }}
         >
           <div className="px-4 text-center sm:px-6">
-            <p className="text-[10px] uppercase tracking-[0.26em] text-white/90 sm:text-xs sm:tracking-[0.45em]">
+            <p className="text-[10px] uppercase tracking-[0.26em] text-white sm:text-xs sm:tracking-[0.45em]">
               Designers and Builders
             </p>
-            <h2 className="mt-4 text-3xl font-semibold tracking-tight text-white/90 sm:mt-5 sm:text-4xl md:text-5xl lg:text-6xl">
+            <h2 className="mt-4 text-3xl font-semibold tracking-tight text-white sm:mt-5 sm:text-4xl md:text-5xl lg:text-6xl">
               BUILDWELLZ
             </h2>
           </div>
@@ -287,7 +287,7 @@ export function Hero() {
           className="pointer-events-none absolute inset-0 flex items-end justify-start p-5 sm:p-8 md:p-14"
           style={{ opacity: subtitleOpacity, y: subtitleY }}
         >
-          <p className="max-w-[18rem] text-xs leading-relaxed tracking-tight text-white/90 sm:max-w-sm sm:text-sm md:text-base">
+          <p className="max-w-[18rem] text-xs leading-relaxed tracking-tight text-white sm:max-w-sm sm:text-sm md:text-base">
             Designing Dreams, Building Reality <br />
             We take comfort and home living to profound new heights.
           </p>
