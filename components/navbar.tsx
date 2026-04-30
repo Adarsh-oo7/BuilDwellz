@@ -169,7 +169,7 @@ useEffect(() => {
               variants={navVariants}
               initial="hidden"
               animate="visible"
-              className="hidden md:flex items-center space-x-1"
+              className="hidden lg:flex items-center space-x-1"
               aria-label="Main navigation"
             >
               {navItems.map((item) => (
@@ -211,7 +211,7 @@ useEffect(() => {
               </motion.div>
             </motion.nav>
 
-            <div className="flex md:hidden items-center gap-2">
+            <div className="flex lg:hidden items-center gap-2">
               <ModeToggle />
               <Button
                 variant="ghost"
@@ -237,7 +237,7 @@ useEffect(() => {
 
       {/* Mobile menu overlay */}
       {isOpen && (
-        <div className="md:hidden fixed inset-0 z-[55] bg-black/50 backdrop-blur-sm" />
+        <div className="lg:hidden fixed inset-0 z-[55] bg-black/50 backdrop-blur-sm" />
       )}
 
       {/* Mobile menu */}
@@ -245,7 +245,7 @@ useEffect(() => {
         initial="closed"
         animate={isOpen ? "open" : "closed"}
         variants={mobileMenuVariants}
-        className={`md:hidden fixed top-0 right-0 bottom-0 w-80 max-w-[85vw] z-[55] ${
+        className={`lg:hidden fixed top-0 right-0 bottom-0 w-80 max-w-[85vw] z-[55] ${
           isOpen ? 'pointer-events-auto' : 'pointer-events-none'
         }`}
         aria-label="Mobile navigation"
