@@ -12,8 +12,9 @@ const TOTAL_FRAMES = 147;
 const SEQUENCE_FOLDER = "/hero-images";
 const FILE_EXTENSION = "webp";
 const BACKGROUND_COLOR = "#000000";
-const PRIORITY_PRELOAD_FRAMES = 18;
+const PRIORITY_PRELOAD_FRAMES = 30;
 const BACKGROUND_BATCH_SIZE = 8;
+
 
 type LoadedFrame = {
   image: HTMLImageElement;
@@ -33,6 +34,8 @@ export function Hero() {
   const targetFrameRef = useRef(0);
   const currentFrameRef = useRef(0);
   const lastDrawnFrameRef = useRef(-1);
+  const velocityRef = useRef(0);
+  const lastTargetRef = useRef(0);
 
   const requestFrame = useCallback((index: number) => {
     if (index < 0 || index >= TOTAL_FRAMES) return;
@@ -213,7 +216,11 @@ export function Hero() {
   }, [reducedMotion, requestFrame, scrollYProgress]);
 
   useEffect(() => {
-    const SMOOTHING = 0.18;
+    const SMOOTHING = 0.12;        // lower base lerp
+    const VELOCITY_DECAY = 0.88;   // momentum falloff
+
+
+
     const animate = () => {
       if (reducedMotion) {
         const staticFrame = 0;
@@ -225,10 +232,19 @@ export function Hero() {
         return;
       }
 
-      const delta = targetFrameRef.current - currentFrameRef.current;
-      currentFrameRef.current += delta * SMOOTHING;
-      if (Math.abs(delta) < 0.01) {
+      // Calculate velocity from how fast the target is moving
+      const targetDelta = targetFrameRef.current - lastTargetRef.current;
+      velocityRef.current = velocityRef.current * VELOCITY_DECAY + targetDelta * (1 - VELOCITY_DECAY);
+      lastTargetRef.current = targetFrameRef.current;
+
+      // Apply velocity + lerp together
+      const gap = targetFrameRef.current - currentFrameRef.current;
+      currentFrameRef.current += gap * SMOOTHING + velocityRef.current * 0.6;
+
+      // Snap when close enough
+      if (Math.abs(gap) < 0.01 && Math.abs(velocityRef.current) < 0.01) {
         currentFrameRef.current = targetFrameRef.current;
+        velocityRef.current = 0;
       }
 
       const frameToDraw = Math.round(currentFrameRef.current);
