@@ -4,8 +4,6 @@ import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
-// import ClientLayout from "./ClinetLayout"; 
-import Script from "next/script";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import { Space_Grotesk, Jost } from 'next/font/google';
 
@@ -26,6 +24,44 @@ const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-playfa
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://buildwellz.in'),
+
+  title: {
+    default: "BuilDwellz (Buildwell, Buildwells) - Premium Designers and Builders in Varkala",
+    template: "%s | BuilDwellz", // page title will be: "About | BuilDwellz"
+  },
+  description: "Premium home design and construction services in Narikkal, Varkala, Kerala. Experts in modern architecture, interior design, and building construction.",
+  keywords: [
+    "builders in Varkala",
+    "home construction Varkala",
+    "architects in Kerala",
+    "interior design Varkala",
+    "construction company Narikkal",
+    "house design Kerala",
+    "builders near me Varkala",
+    "BuilDwellz",
+    "Buildwellz",
+    "buildwell",
+    "buildwells",
+    "build wellz",
+    "buildwelz",
+
+    // Location-based
+    "builders in Varkala",
+    "home construction Varkala",
+    "architects in Kerala",
+    "interior design Varkala",
+    "construction company Narikkal",
+    "house design Kerala",
+    "builders near me Varkala",
+    "best builders Varkala",
+    "builders in Kollam",
+    "builders in Thiruvananthapuram",
+  ],
+
+  alternates: {
+    canonical: "https://buildwellz.in",
+  },
+
   openGraph: {
     title: "BuilDwellz - Premium Designers and Builders",
     description: "Premium design and construction services in Narikkal, Varkala",
@@ -49,8 +85,40 @@ export const metadata: Metadata = {
     images: ["https://buildwellz.in/offc.jpg"],
   },
   icons: {
-    icon: "/favicon.ico",
+    icon: [
+      { url: '/logo.png' },
+      { url: '/web-app-manifest-192x192.png', sizes: '192x192', type: 'image/png' },
+      { url: '/web-app-manifest-512x512.png', sizes: '512x512', type: 'image/png' },
+    ],
+    apple: '/apple-icon.png',
+    shortcut: '/favicon.ico',
   },
+};
+
+const schemaData = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "BuilDwellz",
+  "alternateName": ["Buildwellz", "Buildwell", "Buildwells"],
+  "url": "https://buildwellz.in",
+  "telephone": "+91-8590128023",
+  "email": "buildwellzvarkala@gmail.com",
+  "image": "https://buildwellz.in/offc.jpg",
+  "logo": "https://buildwellz.in/logo.png",
+  "description": "Premium home design and construction services in Narikkal, Varkala, Kerala.",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Narikkal",
+    "addressLocality": "Varkala",
+    "addressRegion": "Kerala",
+    "postalCode": "695143",
+    "addressCountry": "IN"
+  },
+  "openingHours": "Mo-Sa 09:00-18:00",
+  "sameAs": [
+    "https://www.instagram.com/buildwellz_designersnbuilders",
+    "https://www.facebook.com/buildwellz.varala"  // cleaned up URL
+  ]
 };
 
 export default function RootLayout({
@@ -63,15 +131,17 @@ export default function RootLayout({
     <html lang="en" role="document">
       <head>
         <link rel="preload" as="image" href="/hero-images/frame_0001.webp" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
+        />
       </head>
       <body className={`${inter.variable} ${playfair.variable} ${jost.variable} ${space.variable} font-sans`}>
 
-        {/* <ClientLayout> */}
         <Navbar />
         <main id="main-content">{children}</main>
         <WhatsAppButton />
         <Footer />
-        {/* </ClientLayout> */}
       </body>
     </html>
   );
