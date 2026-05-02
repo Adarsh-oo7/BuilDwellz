@@ -86,12 +86,12 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: '/logo.png' },
-      { url: '/web-app-manifest-192x192.png', sizes: '192x192', type: 'image/png' },
-      { url: '/web-app-manifest-512x512.png', sizes: '512x512', type: 'image/png' },
+      { url: '../logo.png' },
+      { url: '../web-app-manifest-192x192.png', sizes: '192x192', type: 'image/png' },
+      { url: '../web-app-manifest-512x512.png', sizes: '512x512', type: 'image/png' },
     ],
-    apple: '/apple-icon.png',
-    shortcut: '/favicon.ico',
+    apple: '../apple-icon.png',
+    shortcut: '../favicon.ico',
   },
 };
 
