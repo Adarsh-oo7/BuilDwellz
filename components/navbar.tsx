@@ -20,27 +20,27 @@ export default function Navbar() {
   const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const [logoPath, setLogoPath] = useState("./logo.png"); // default fallback
-  
+
   // Get the correct logo path based on current route
 
 
 
-useEffect(() => {
-  setMounted(true);
+  useEffect(() => {
+    setMounted(true);
 
-  const getLogoPath = () => {
-    if (pathname === "/") {
-      return resolvedTheme === "dark" ? "./whitelogo.png" : "./logo.png";
-    } else if ( pathname === "/blog/" || pathname === "/about/" || pathname === "/services/" || pathname === "/projects/" || pathname === "/Initiatives/" || pathname === "/contact/" ) {
-      return resolvedTheme === "dark" ? "../whitelogo.png" : "../logo.png";
+    const getLogoPath = () => {
+      if (pathname === "/") {
+        return resolvedTheme === "dark" ? "./whitelogo.png" : "./logo.png";
+      } else if (pathname === "/blog/" || pathname === "/about/" || pathname === "/services/" || pathname === "/projects/" || pathname === "/Initiatives/" || pathname === "/contact/") {
+        return resolvedTheme === "dark" ? "../whitelogo.png" : "../logo.png";
+      }
+      return resolvedTheme === "dark" ? "../../whitelogo.png" : "../../logo.png";
+    };
+
+    if (resolvedTheme) {
+      setLogoPath(getLogoPath());
     }
-    return resolvedTheme === "dark" ? "../../whitelogo.png" : "../../logo.png";
-  };
-
-  if (resolvedTheme) {
-    setLogoPath(getLogoPath());
-  }
-}, [resolvedTheme, pathname]);
+  }, [resolvedTheme, pathname]);
 
 
 
@@ -119,33 +119,32 @@ useEffect(() => {
   };
 
   const mobileMenuVariants = {
-    closed: { 
-      opacity: 0, 
-      x: "100%", 
-      transition: { 
+    closed: {
+      opacity: 0,
+      x: "100%",
+      transition: {
         duration: 0.3,
         ease: "easeInOut"
-      } 
+      }
     },
-    open: { 
-      opacity: 1, 
-      x: 0, 
-      transition: { 
-        type: "spring", 
-        stiffness: 300, 
-        damping: 30 
-      } 
+    open: {
+      opacity: 1,
+      x: 0,
+      transition: {
+        type: "spring",
+        stiffness: 300,
+        damping: 30
+      }
     },
   };
 
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled
-            ? "bg-white/95 dark:bg-black/95 backdrop-blur-md shadow-lg border-b border-gray-200 dark:border-gray-800"
-            : "bg-gradient-to-br from-white/60 to-white/60 dark:from-gray-900/60 dark:to-gray-900/60"
-        }`}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
+          ? "bg-white/95 dark:bg-black/95 backdrop-blur-md shadow-lg border-b border-gray-200 dark:border-gray-800"
+          : "bg-gradient-to-br from-white/60 to-white/60 dark:from-gray-900/60 dark:to-gray-900/60"
+          }`}
       >
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
@@ -161,6 +160,7 @@ useEffect(() => {
                   alt="Logo"
                   width={150}
                   height={150}
+                  priority
                 />
               </Link>
             </motion.div>
@@ -176,24 +176,22 @@ useEffect(() => {
                 <motion.div key={item.path} variants={itemVariants}>
                   <Link
                     href={item.path}
-                    className={`px-4 py-2 rounded-md text-base font-medium transition-colors relative group ${
-                      pathname === item.path
-                        ? "text-red-600 dark:text-red-400"
-                        : isScrolled
+                    className={`px-4 py-2 rounded-md text-base font-medium transition-colors relative group ${pathname === item.path
+                      ? "text-red-600 dark:text-red-400"
+                      : isScrolled
                         ? "text-black dark:text-white hover:text-red-600 dark:hover:text-red-400"
                         : "text-black dark:text-gray-300 hover:text-red-600 dark:hover:text-red-400"
-                    }`}
+                      }`}
                     aria-current={pathname === item.path ? "page" : undefined}
                   >
                     {item.name}
                     <span
-                      className={`absolute bottom-0 left-0 w-full h-0.5 transform origin-left transition-transform duration-300 ${
-                        pathname === item.path
-                          ? "bg-red-600 dark:bg-red-400 scale-x-100"
-                          : isScrolled
+                      className={`absolute bottom-0 left-0 w-full h-0.5 transform origin-left transition-transform duration-300 ${pathname === item.path
+                        ? "bg-red-600 dark:bg-red-400 scale-x-100"
+                        : isScrolled
                           ? "bg-red-600 dark:bg-red-400 scale-x-0 group-hover:scale-x-100"
                           : "bg-red-600 dark:bg-red-400 scale-x-0 group-hover:scale-x-100"
-                      }`}
+                        }`}
                     />
                   </Link>
                 </motion.div>
@@ -222,11 +220,10 @@ useEffect(() => {
                 }}
                 aria-label="Toggle menu"
                 aria-expanded={isOpen}
-                className={`relative z-[60] ${
-                  isScrolled
-                    ? "text-black dark:text-white hover:text-red-600 dark:hover:text-red-400"
-                    : "text-black dark:text-gray-300 hover:text-red-600 dark:hover:text-red-400"
-                }`}
+                className={`relative z-[60] ${isScrolled
+                  ? "text-black dark:text-white hover:text-red-600 dark:hover:text-red-400"
+                  : "text-black dark:text-gray-300 hover:text-red-600 dark:hover:text-red-400"
+                  }`}
               >
                 {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
               </Button>
@@ -245,26 +242,26 @@ useEffect(() => {
         initial="closed"
         animate={isOpen ? "open" : "closed"}
         variants={mobileMenuVariants}
-        className={`lg:hidden fixed top-0 right-0 bottom-0 w-80 max-w-[85vw] z-[55] ${
-          isOpen ? 'pointer-events-auto' : 'pointer-events-none'
-        }`}
+        className={`lg:hidden fixed top-0 right-0 bottom-0 w-80 max-w-[85vw] z-[55] ${isOpen ? 'pointer-events-auto' : 'pointer-events-none'
+          }`}
         aria-label="Mobile navigation"
         onClick={(e) => e.stopPropagation()}
       >
 
 
-    
+
 
 
         <div className="flex flex-col h-full bg-white dark:bg-black shadow-2xl">
           <div className="flex-1 overflow-y-auto pt-5 px-6 pb-6  space-y-2">
-                 <Image
-                 className="pb-5"
-                  src={logoPath}
-                  alt="Logo"
-                  width={150}
-                  height={150}
-                />
+            <Image
+              className="pb-5"
+              src={logoPath}
+              alt="Logo"
+              width={150}
+              height={150}
+              priority
+            />
             {navItems.map((item, index) => (
               <motion.div
                 key={item.path}
@@ -274,11 +271,10 @@ useEffect(() => {
               >
                 <Link
                   href={item.path}
-                  className={`block py-4 px-4 text-lg font-medium rounded-lg transition-colors ${
-                    pathname === item.path
-                      ? "text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-950/20"
-                      : "text-black dark:text-white hover:text-red-600 dark:hover:text-red-400 hover:bg-gray-50 dark:hover:bg-gray-900"
-                  }`}
+                  className={`block py-4 px-4 text-lg font-medium rounded-lg transition-colors ${pathname === item.path
+                    ? "text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-950/20"
+                    : "text-black dark:text-white hover:text-red-600 dark:hover:text-red-400 hover:bg-gray-50 dark:hover:bg-gray-900"
+                    }`}
                   onClick={() => setIsOpen(false)}
                   aria-current={pathname === item.path ? "page" : undefined}
                 >
@@ -294,7 +290,7 @@ useEffect(() => {
             >
               <Link href="/contact" onClick={() => setIsOpen(false)}>
                 Get a Quote
-                
+
               </Link>
             </Button>
           </div>

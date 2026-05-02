@@ -25,15 +25,15 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-playfair" });
 
 export const metadata: Metadata = {
-
+  metadataBase: new URL('https://buildwellz.in'),
   openGraph: {
     title: "BuilDwellz - Premium Designers and Builders",
     description: "Premium design and construction services in Narikkal, Varkala",
-    url: "https://buildwellz.com",
+    url: "https://buildwellz.in",
     siteName: "BuilDwellz",
     images: [
       {
-        url: "https://buildwellz.com/offc.jpg",
+        url: "https://buildwellz.in/offc.jpg",
         width: 1200,
         height: 630,
         alt: "BuilDwellz - Designing Dreams, Building Reality",
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "BuilDwellz - Premium Designers and Builders",
     description: "Premium design and construction services in Narikkal, Varkala",
-    images: ["https://buildwellz.com/offc.jpg"],
+    images: ["https://buildwellz.in/offc.jpg"],
   },
   icons: {
     icon: "/favicon.ico",
