@@ -24,7 +24,6 @@ export default function Navbar() {
   // Get the correct logo path based on current route
 
 
-
   useEffect(() => {
     setMounted(true);
 
